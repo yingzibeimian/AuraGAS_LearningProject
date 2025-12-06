@@ -3,6 +3,7 @@
 
 #include "Player/AuraPlayerController.h"
 #include "EnhancedInputSubsystems.h"
+#include "EnhancedInputComponent.h"
 
 AAuraPlayerController::AAuraPlayerController()
 {
@@ -32,4 +33,32 @@ void AAuraPlayerController::BeginPlay()
 	InputModeData.SetHideCursorDuringCapture(false);
 	// 应用输入模式，使游戏同时接收“游戏输入 + UI 输入”
 	SetInputMode(InputModeData);
+}
+
+void AAuraPlayerController::SetupInputComponent()
+{
+	Super::SetupInputComponent();
+	
+	// 可见Project Settings-Input-Default Classes
+	UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(InputComponent);
+	EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AAuraPlayerController::Move);
+}
+
+// 使用 const 引用（const FInputActionValue&）避免拷贝，提高效率，同时保证函数内部不会修改传入的输入值（输入是只读的）
+void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
+{
+	const FVector2D InputAxisVector = InputActionValue.Get<FVector2D>();
+	// 控制器朝向 = 摄像机朝向（玩家视角旋转）
+	const FRotator CameraRotation = GetControlRotation();
+	// 只取 Yaw（水平旋转），防止上下看时移动方向跟着倾斜
+	const FRotator YawRotation(0.f, GetControlRotation().Yaw, 0.f);
+	// 根据控制器朝向构建旋转矩阵，获取前(X)和右(Y)的世界方向单位向量
+	const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+	const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+	
+	if (APawn* ControlledPawn = GetPawn<APawn>())
+	{
+		ControlledPawn->AddMovementInput(ForwardDirection, InputAxisVector.Y);
+		ControlledPawn->AddMovementInput(RightDirection, InputAxisVector.X);
+	}
 }
