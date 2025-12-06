@@ -9,6 +9,9 @@
   <component name="ChangeListManager">
     <list default="true" id="baffbef2-f63c-44a0-a263-ab5800f28f37" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.AuraGAS_LearnProject.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AuraGAS_LearnProject.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/AuraGAS_LearnProject.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/AuraGAS_LearnProject.Build.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/Player/AuraPlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/Player/AuraPlayerController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/Player/AuraPlayerController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/Player/AuraPlayerController.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,7 +149,7 @@
       <workItem from="1764948238899" duration="2062000" />
       <workItem from="1764952278107" duration="641000" />
       <workItem from="1765009524832" duration="8331000" />
-      <workItem from="1765028555629" duration="2169000" />
+      <workItem from="1765028555629" duration="4924000" />
     </task>
     <servers />
   </component>
