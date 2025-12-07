@@ -51,7 +51,7 @@ void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 	// 控制器朝向 = 摄像机朝向（玩家视角旋转）
 	const FRotator CameraRotation = GetControlRotation();
 	// 只取 Yaw（水平旋转），防止上下看时移动方向跟着倾斜
-	const FRotator YawRotation(0.f, GetControlRotation().Yaw, 0.f);
+	const FRotator YawRotation(0.f, CameraRotation.Yaw, 0.f);
 	// 根据控制器朝向构建旋转矩阵，获取前(X)和右(Y)的世界方向单位向量
 	const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 	const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
