@@ -9,6 +9,7 @@
 class UInputMappingContext;
 class UInputAction;
 struct FInputActionValue;
+class IEnemyInterface;
 
 /**
  * 
@@ -19,6 +20,8 @@ class AURAGAS_LEARNPROJECT_API AAuraPlayerController : public APlayerController
 	GENERATED_BODY()
 public:
 	AAuraPlayerController();
+	
+	virtual void PlayerTick(float DeltaTime) override;
 	
 protected:
 	virtual void BeginPlay() override;
@@ -33,4 +36,9 @@ private:
 	TObjectPtr<UInputAction> MoveAction;
 	
 	void Move(const FInputActionValue& InputActionValue);
+	
+	void CursorTrace();
+	// 指针问题之后再处理
+	IEnemyInterface* LastActor;
+	IEnemyInterface* ThisActor;
 };

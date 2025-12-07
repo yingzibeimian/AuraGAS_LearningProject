@@ -17,4 +17,7 @@ class AURAGAS_LEARNPROJECT_API AAuraEnemy : public AAuraCharacterBase, public IE
 public:
 	virtual void HighlightActor() override;
 	virtual void UnHighlightActor() override;
+	
+	UPROPERTY(BlueprintReadOnly)
+	bool bHighlighted = false;
 };

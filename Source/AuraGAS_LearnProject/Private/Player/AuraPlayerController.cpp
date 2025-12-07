@@ -4,6 +4,7 @@
 #include "Player/AuraPlayerController.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
+#include "Interaction/EnemyInterface.h"
 
 AAuraPlayerController::AAuraPlayerController()
 {
@@ -11,6 +12,56 @@ AAuraPlayerController::AAuraPlayerController()
 	// 不开复制会导致 RPC、属性同步、HUD 更新全部失效
 	// Replication is responding to data updating on the server and sending that down to clients
 	bReplicates = true;
+}
+
+void AAuraPlayerController::PlayerTick(float DeltaTime)
+{
+	Super::PlayerTick(DeltaTime);
+	
+	CursorTrace();
+}
+
+// 追踪光标, 检测Enemy并高亮
+void AAuraPlayerController::CursorTrace()
+{
+	FHitResult CursorHit;
+	GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, false, CursorHit);
+	if (!CursorHit.bBlockingHit) return;
+	
+	LastActor = ThisActor;
+	ThisActor = Cast<IEnemyInterface>(CursorHit.GetActor());
+	
+	/** 
+	 * Line trace from cursor. There are several scenarios:
+	 *  A. LastActor is null && ThisActor is null
+	 *		- Do nothing
+	 *	B. LastActor is null && ThisActor is valid
+	 *		- Highlight ThisActor
+	 *	C. LastActor is valid && ThisActor is null
+	 *		- UnHighlight LastActor
+	 *	D. Both actors are valid, but LastActor != ThisActor
+	 *		- UnHighlight LastActor, and Highlight ThisActor
+	 *	E. Both actors are valid, and are the same actor
+	 *		- Do nothing
+	 */
+	
+	if (LastActor == nullptr && ThisActor != nullptr)
+	{
+		// Case B
+		ThisActor->HighlightActor();
+	}
+	else if (LastActor != nullptr && ThisActor == nullptr)
+	{
+		// Case C
+		LastActor->UnHighlightActor();
+	}
+	else if (LastActor != nullptr && ThisActor != nullptr && LastActor != ThisActor)
+	{
+		// Case D
+		LastActor->HighlightActor();
+		ThisActor->UnHighlightActor();
+	}
+	
 }
 
 void AAuraPlayerController::BeginPlay()
@@ -44,7 +95,9 @@ void AAuraPlayerController::SetupInputComponent()
 	EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AAuraPlayerController::Move);
 }
 
-// 使用 const 引用（const FInputActionValue&）避免拷贝，提高效率，同时保证函数内部不会修改传入的输入值（输入是只读的）
+
+/// 移动函数
+/// @param InputActionValue 使用 const 引用（const FInputActionValue&）避免拷贝，提高效率，同时保证函数内部不会修改传入的输入值（输入是只读的）
 void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 {
 	const FVector2D InputAxisVector = InputActionValue.Get<FVector2D>();
