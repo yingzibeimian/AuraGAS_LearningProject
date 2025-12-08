@@ -14,7 +14,8 @@ AAuraPlayerState::AAuraPlayerState()
 	// Mixed: Gameplay Effects are replicated to the owning client only. Gameplay Cues and Gameplay Tags replicated to all clients. (Case: Multiplayer, Player-Controlled)
 	// Minimal: Gameplay Effects are not replicated. Gameplay Cues and Gameplay Tags replicated to all clients. (Case: Multiplayer, AI-Controlled)
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
-	
+	// AttributeSet is automatically registered with ASC,and the ASC has access to it
+	// Multiple Attribute Sets is allowed they but must be separate classes
 	AttributeSet = CreateDefaultSubobject<UAuraAttributeSet>("AttributeSet");
 	
 	// NetUpdateFrequency: how often (per second) the server will try to update clients

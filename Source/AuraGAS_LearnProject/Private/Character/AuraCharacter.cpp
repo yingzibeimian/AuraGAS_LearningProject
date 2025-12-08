@@ -20,6 +20,7 @@ AAuraCharacter::AAuraCharacter()
 	bUseControllerRotationYaw = false;
 }
 
+/// “控制权”的建立（Possession）是服务器权威行为, 仅在服务器调用
 void AAuraCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
@@ -30,6 +31,8 @@ void AAuraCharacter::PossessedBy(AController* NewController)
 	InitAbilityActorInfo();
 }
 
+/// RepNotify回调函数
+/// PlayerState指针通过RepNotify从服务器同步到客户端
 void AAuraCharacter::OnRep_PlayerState()
 {
 	Super::OnRep_PlayerState();
