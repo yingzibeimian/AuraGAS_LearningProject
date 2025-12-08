@@ -10,6 +10,10 @@ AAuraPlayerState::AAuraPlayerState()
 {
 	AbilitySystemComponent = CreateDefaultSubobject<UAuraAbilitySystemComponent>("AbilitySystemComponent");
 	AbilitySystemComponent->SetIsReplicated(true);
+	// Full: Gameplay Effects are replicated to all clients. (Case: Single Player)
+	// Mixed: Gameplay Effects are replicated to the owning client only. Gameplay Cues and Gameplay Tags replicated to all clients. (Case: Multiplayer, Player-Controlled)
+	// Minimal: Gameplay Effects are not replicated. Gameplay Cues and Gameplay Tags replicated to all clients. (Case: Multiplayer, AI-Controlled)
+	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 	
 	AttributeSet = CreateDefaultSubobject<UAuraAttributeSet>("AttributeSet");
 	
