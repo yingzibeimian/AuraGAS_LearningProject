@@ -70,9 +70,19 @@ void AAuraPlayerController::BeginPlay()
 	check(AuraContext); // AuraContext若不存在, 则让游戏崩溃
 	
 	// Subsystem is singletons, there exists only one for the duration of the program
+	// 这里用 if 而不是 check：
+	// 因为 AAuraPlayerController 的 BeginPlay 不仅会在“本地客户端”执行，
+	// 还会在“服务器上的 PlayerController”上执行。
+	// 服务器也有 PlayerController，但服务器永远没有 LocalPlayer，
+	// 因此在服务器上：GetLocalPlayer() == nullptr 是完全正常情况。
+	// 这里的逻辑本质是：
+	//   “只在真正拥有本地玩家的那一台客户端上初始化输入系统”。
+	// 如果这里用 check，服务器必然崩溃。
 	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
-	check(Subsystem);
-	Subsystem->AddMappingContext(AuraContext, 0);
+	if (Subsystem)
+	{
+		Subsystem->AddMappingContext(AuraContext, 0);
+	}
 	
 	bShowMouseCursor = true;
 	DefaultMouseCursor = EMouseCursor::Default;

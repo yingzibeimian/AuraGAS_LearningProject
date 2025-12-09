@@ -5,7 +5,9 @@
 
 #include "AbilitySystemComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Player/AuraPlayerController.h"
 #include "Player/AuraPlayerState.h"
+#include "UI/HUD/AuraHUD.h"
 
 AAuraCharacter::AAuraCharacter()
 {
@@ -50,4 +52,21 @@ void AAuraCharacter::InitAbilityActorInfo()
 	// 设置AuraCharacterBase中的ASC和AS指针
 	AbilitySystemComponent = AuraPlayerState->GetAbilitySystemComponent();
 	AttributeSet = AuraPlayerState->GetAttributeSet();
+	
+	// 这里必须用 if 而不能用 check：
+	// 因为 InitAbilityActorInfo() 不仅会在“本地受控角色”上调用，
+	// 还会在“其他客户端角色的副本”上通过 OnRep_PlayerState() 被调用。
+	// 对于这些非本机角色：
+	//   - 它们有 PlayerState（复制而来）
+	//   - 但没有有效的 PlayerController（GetController() 为 nullptr）
+	// 如果这里用 check，任意一个远端角色同步下来都会直接崩溃。
+	// 所以这里只能“有就初始化 UI，没有就跳过”，这是联机下的必然写法。
+	if (AAuraPlayerController* AuraPlayerController = Cast<AAuraPlayerController>(GetController()))
+	{
+		if (AAuraHUD* AuraHUD = Cast<AAuraHUD>(AuraPlayerController->GetHUD()))
+		{
+			// 初始化OverlayWidget和OverlayWidgetController, 并做绑定
+			AuraHUD->InitOverlay(AuraPlayerController, AuraPlayerState, AbilitySystemComponent, AttributeSet);
+		}
+	}
 }
