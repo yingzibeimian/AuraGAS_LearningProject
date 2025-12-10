@@ -49,7 +49,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "Uproject.AuraGAS_LearnProject.executor": "Debug",
+    "Uproject.AuraGAS_LearnProject.executor": "Run",
     "git-widget-placeholder": "main",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -153,6 +153,7 @@
       <workItem from="1765162133144" duration="6860000" />
       <workItem from="1765185861951" duration="14401000" />
       <workItem from="1765248524761" duration="9877000" />
+      <workItem from="1765268916900" duration="14951000" />
     </task>
     <servers />
   </component>
