@@ -93,6 +93,5 @@ protected:
 	// UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Applied Effects")
 	// EEffectRemovePolicy InfiniteEffectRemovePolicy = EEffectRemovePolicy::RemoveOnEndOverlap;
 	
-	// TMap<FActiveGameplayEffectHandle, UAbilitySystemComponent*> ActiveEffectHandles;
-	TMap<FActiveGameplayEffectHandle, FEffectConfig> ActiveEffectHandles;
+	TMap<FActiveGameplayEffectHandle, UAbilitySystemComponent*> ActiveEffectHandles;
 };
