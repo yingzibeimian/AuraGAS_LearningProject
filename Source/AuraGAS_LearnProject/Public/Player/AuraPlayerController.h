@@ -39,6 +39,6 @@ private:
 	
 	void CursorTrace();
 	// 指针问题之后再处理
-	TObjectPtr<IEnemyInterface> LastActor;
-	TObjectPtr<IEnemyInterface> ThisActor;
+	TWeakObjectPtr<AActor> LastActor;
+	TWeakObjectPtr<AActor> ThisActor;
 };

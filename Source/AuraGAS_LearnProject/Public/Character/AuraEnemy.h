@@ -22,8 +22,16 @@ public:
 	virtual void UnHighlightActor() override;
 	//~ End Enemy Interface
 	
+	/** Combat Interface */
+	virtual int32 GetPlayerLevel() override;
+	/** Combat Interface */
+	
 protected:
 	virtual void BeginPlay() override;
 	
 	virtual void InitAbilityActorInfo() override;
+	
+	// 不需要Replication, 因为对于AIController所控制的敌人, 其需要等级的计算等重要事项只会在Server上进行
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults")
+	int32 Level = 1;
 };
