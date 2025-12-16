@@ -7,14 +7,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="baffbef2-f63c-44a0-a263-ab5800f28f37" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.AuraGAS_LearnProject.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AuraGAS_LearnProject.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Actor/Area/GE_FireArea.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Actor/Area/GE_FireArea.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Player/BP_AuraPlayerState.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Player/BP_AuraPlayerState.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/AbilitySystem/AuraAttributeSet.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/AbilitySystem/AuraAttributeSet.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/AbilitySystem/AuraAttributeSet.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/AbilitySystem/AuraAttributeSet.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/Player/AuraPlayerState.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/Player/AuraPlayerState.h" afterDir="false" />
-    </list>
+    <list default="true" id="baffbef2-f63c-44a0-a263-ab5800f28f37" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -183,7 +176,7 @@
       <workItem from="1765642406823" duration="2446000" />
       <workItem from="1765721540749" duration="4091000" />
       <workItem from="1765767752801" duration="16144000" />
-      <workItem from="1765859617995" duration="5003000" />
+      <workItem from="1765859617995" duration="5173000" />
     </task>
     <servers />
   </component>
