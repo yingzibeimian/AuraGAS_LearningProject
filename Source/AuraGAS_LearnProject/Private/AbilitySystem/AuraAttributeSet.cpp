@@ -11,8 +11,7 @@
 
 UAuraAttributeSet::UAuraAttributeSet()
 {
-	InitHealth(10.f);
-	InitMana(10.f);
+
 }
 
 // Must be overridden if any variable to be replicate
