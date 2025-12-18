@@ -9,7 +9,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(BlueprintType, Blueprintable)
 class AURAGAS_LEARNPROJECT_API UAttributeMenuWidgetController : public UAuraWidgetController
 {
 	GENERATED_BODY()
