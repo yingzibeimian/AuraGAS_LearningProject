@@ -32,6 +32,7 @@ void AAuraCharacter::PossessedBy(AController* NewController)
 	// Call InitAbilityActorInfo here because it needs to be sure that we have a valid player controller set already, and our player state is valid and accessible
 	// The PlayerState is created and assigned by the engine during the possession process, which happens later in the actor's lifecycle such as constructor
 	InitAbilityActorInfo();
+	AddCharacterAbilities(); // Only Add Abilities On Server
 }
 
 /// RepNotify回调函数
