@@ -4,8 +4,10 @@
 #include "Player/AuraPlayerController.h"
 
 #include "AbilitySystemBlueprintLibrary.h"
+#include "AuraGameplayTags.h"
 #include "EnhancedInputSubsystems.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
+#include "Components/SplineComponent.h"
 #include "Input/AuraInputComponent.h"
 #include "Interaction/EnemyInterface.h"
 
@@ -15,6 +17,8 @@ AAuraPlayerController::AAuraPlayerController()
 	// 不开复制会导致 RPC、属性同步、HUD 更新全部失效
 	// Replication is responding to data updating on the server and sending that down to clients
 	bReplicates = true;
+	
+	Spline = CreateDefaultSubobject<USplineComponent>("Spline");
 }
 
 void AAuraPlayerController::PlayerTick(float DeltaTime)
@@ -32,10 +36,7 @@ void AAuraPlayerController::CursorTrace()
 	if (!CursorHit.bBlockingHit) return;
 	
 	LastActor = ThisActor;
-	ThisActor = CursorHit.GetActor();
-	
-	IEnemyInterface* LastEnemy = Cast<IEnemyInterface>(LastActor.Get());
-	IEnemyInterface* ThisEnemy = Cast<IEnemyInterface>(ThisActor.Get());
+	ThisActor = Cast<IEnemyInterface>(CursorHit.GetActor());
 	
 	/** 
 	 * Line trace from cursor. There are several scenarios:
@@ -51,28 +52,32 @@ void AAuraPlayerController::CursorTrace()
 	 *		- Do nothing
 	 */
 	
-	if (LastEnemy == nullptr && ThisEnemy != nullptr)
+	if (LastActor == nullptr && ThisActor != nullptr)
 	{
 		// Case B
-		ThisEnemy->HighlightActor();
+		ThisActor->HighlightActor();
 	}
-	else if (LastEnemy != nullptr && ThisEnemy == nullptr)
+	else if (LastActor != nullptr && ThisActor == nullptr)
 	{
 		// Case C
-		LastEnemy->UnHighlightActor();
+		LastActor->UnHighlightActor();
 	}
-	else if (LastEnemy != nullptr && ThisEnemy != nullptr && LastEnemy != ThisEnemy)
+	else if (LastActor != nullptr && ThisActor != nullptr && LastActor != ThisActor)
 	{
 		// Case D
-		LastEnemy->HighlightActor();
-		ThisEnemy->UnHighlightActor();
+		LastActor->HighlightActor();
+		ThisActor->UnHighlightActor();
 	}
 	
 }
 
 void AAuraPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 {
-
+	if (InputTag.MatchesTagExact(FAuraGameplayTags::Get().InputTag_LMB))
+	{
+		bTargeting = ThisActor ? true : false;
+		bAutoRunning = false;	
+	}
 }
 
 void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
@@ -83,8 +88,37 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 
 void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 {
-	if (GetASC() == nullptr) return; // 防止调用时机过早
-	GetASC()->AbilityInputTagHeld(InputTag);
+	if (!InputTag.MatchesTagExact(FAuraGameplayTags::Get().InputTag_LMB))
+	{
+		if (GetASC()) // 防止调用时机过早
+		{
+			GetASC()->AbilityInputTagHeld(InputTag);
+		}
+		return;
+	}
+	
+	if (bTargeting)
+	{
+		if (GetASC())
+		{
+			GetASC()->AbilityInputTagHeld(InputTag);
+		}
+	}
+	else
+	{
+		FollowTime += GetWorld()->GetDeltaSeconds();
+		
+		FHitResult Hit;
+		if (GetHitResultUnderCursor(ECC_Visibility, false, Hit))
+		{
+			CachedDestination = Hit.ImpactPoint;
+			if (APawn* ControlledPawn = GetPawn())
+			{
+				const FVector WorldDirection = (CachedDestination - ControlledPawn->GetActorLocation()).GetSafeNormal();
+				ControlledPawn->AddMovementInput(WorldDirection);
+			}
+		}
+	}
 }
 
 UAuraAbilitySystemComponent* AAuraPlayerController::GetASC()
