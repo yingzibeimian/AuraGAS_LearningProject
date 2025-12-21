@@ -2,6 +2,8 @@
 
 
 #include "AuraAssetManager.h"
+
+#include "AbilitySystemGlobals.h"
 #include "AuraGameplayTags.h"
 
 UAuraAssetManager& UAuraAssetManager::Get()
@@ -15,6 +17,7 @@ UAuraAssetManager& UAuraAssetManager::Get()
 void UAuraAssetManager::StartInitialLoading()
 {
 	Super::StartInitialLoading();
-	
 	FAuraGameplayTags::Get().InitializeNativeGameplayTags();
+	// 重点在于InitGlobalData()中的InitTargetDataScriptStructCache(), because this is required to ues Target Data (such as TargetDataUnderMouse.cpp)
+	UAbilitySystemGlobals::Get().InitGlobalData();
 }
