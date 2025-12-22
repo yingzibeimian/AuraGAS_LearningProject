@@ -9,18 +9,11 @@
   <component name="ChangeListManager">
     <list default="true" id="baffbef2-f63c-44a0-a263-ab5800f28f37" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.AuraGAS_LearnProject.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AuraGAS_LearnProject.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AuraGAS_LearnProject.uproject" beforeDir="false" afterPath="$PROJECT_DIR$/AuraGAS_LearnProject.uproject" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Assets/Characters/Aura/Animations/Abilities/AM_Cast_FireBolt.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Characters/Aura/Animations/Abilities/AM_Cast_FireBolt.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Blueprints/AbilitySystem/GameplayAbilities/Fire/FireBolt/GA_FireBolt.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/AbilitySystem/GameplayAbilities/Fire/FireBolt/GA_FireBolt.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/AnimNotifies/AN_MontageEvent.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/AnimNotifies/AN_MontageEvent.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Input/IMC_AuraContext.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Input/IMC_AuraContext.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Player/BP_AuraPlayerController.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Player/BP_AuraPlayerController.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Maps/StartupMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/StartupMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/AbilitySystem/Abilities/AuraProjectileSpell.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/AbilitySystem/Abilities/AuraProjectileSpell.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/AbilitySystem/AbilityTasks/TargetDataUnderMouse.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/AbilitySystem/AbilityTasks/TargetDataUnderMouse.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/Character/AuraCharacterBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/Character/AuraCharacterBase.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/Player/AuraPlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/Player/AuraPlayerController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/AbilitySystem/Abilities/AuraProjectileSpell.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/AbilitySystem/Abilities/AuraProjectileSpell.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/Player/AuraPlayerController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/Player/AuraPlayerController.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Character/Aura/BP_AuraCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Character/Aura/BP_AuraCharacter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/Interaction/CombatInterface.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/Interaction/CombatInterface.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,7 +27,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="cidr-memory-view://5" root0="FORCE_HIGHLIGHTING" />
+    <setting file="cidr-memory-view://2" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/Character/AuraCharacter.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/Player/AuraPlayerController.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/Character/AuraCharacter.h" root0="FORCE_HIGHLIGHTING" />
@@ -235,7 +228,8 @@
       <workItem from="1766209535370" duration="26685000" />
       <workItem from="1766291349411" duration="3742000" />
       <workItem from="1766304050820" duration="12968000" />
-      <workItem from="1766326213778" duration="8685000" />
+      <workItem from="1766326213778" duration="8773000" />
+      <workItem from="1766378729124" duration="2271000" />
     </task>
     <servers />
   </component>
