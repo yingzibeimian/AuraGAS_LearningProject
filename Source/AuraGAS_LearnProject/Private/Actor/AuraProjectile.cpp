@@ -2,6 +2,9 @@
 
 
 #include "Actor/AuraProjectile.h"
+
+#include "AbilitySystemBlueprintLibrary.h"
+#include "AbilitySystemComponent.h"
 #include "NiagaraFunctionLibrary.h"
 #include "AuraGAS_LearnProject/AuraGAS_LearnProject.h"
 #include "Components/AudioComponent.h"
@@ -65,6 +68,12 @@ void AAuraProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, 
 	
 	if (HasAuthority())
 	{
+		// Destroy 和 应用GameplayEffect都是服务器权威行为
+		if (UAbilitySystemComponent* TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(OtherActor))
+		{
+			if (DamageEffectSpecHandle.IsValid()) TargetASC->ApplyGameplayEffectSpecToSelf(*DamageEffectSpecHandle.Data.Get());
+		}
+		
 		Destroy();
 	}
 	else
