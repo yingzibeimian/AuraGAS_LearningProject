@@ -14,6 +14,7 @@ struct FInputActionValue;
 class IEnemyInterface;
 class UAuraAbilitySystemComponent;
 class USplineComponent;
+class UDamageTextComponent;
 
 /**
  * 
@@ -26,6 +27,10 @@ public:
 	AAuraPlayerController();
 	
 	virtual void PlayerTick(float DeltaTime) override;
+	
+	// Client: for Client controlled character, func will be called on the Server but executed on the Client
+	UFUNCTION(Client, Reliable)
+	void ShowDamageNumber(float DamageAmount, AActor* TargetActor);
 	
 protected:
 	virtual void BeginPlay() override;
@@ -79,4 +84,7 @@ private:
 	TObjectPtr<USplineComponent> Spline;
 	
 	void AutoRun();
+	
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UDamageTextComponent> DamageTextComponentClass;
 };
