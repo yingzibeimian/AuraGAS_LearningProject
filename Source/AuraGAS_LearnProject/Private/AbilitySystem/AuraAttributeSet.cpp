@@ -165,9 +165,9 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectMo
 void UAuraAttributeSet::ShowFloatingText(const FEffectProperties& Props, float Damage) const
 {
 	// 非自伤情况 在伤害目标处显示伤害数字
-	if (Props.SourceCharacter != Props.TargetCharacter)
+	if (Props.SourceCharacter && Props.SourceCharacter != Props.TargetCharacter)
 	{
-		if (AAuraPlayerController* PC = Cast<AAuraPlayerController>(UGameplayStatics::GetPlayerController(Props.SourceCharacter, 0)))
+		if (AAuraPlayerController* PC = Cast<AAuraPlayerController>(Props.SourceCharacter->GetController()))
 		{
 			PC->ShowDamageNumber(Damage, Props.TargetCharacter);
 		}

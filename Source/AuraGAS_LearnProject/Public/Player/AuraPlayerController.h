@@ -30,7 +30,7 @@ public:
 	
 	// Client: for Client controlled character, func will be called on the Server but executed on the Client
 	UFUNCTION(Client, Reliable)
-	void ShowDamageNumber(float DamageAmount, AActor* TargetActor);
+	void ShowDamageNumber(float DamageAmount, ACharacter* TargetCharacter);
 	
 protected:
 	virtual void BeginPlay() override;

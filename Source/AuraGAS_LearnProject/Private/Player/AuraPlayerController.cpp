@@ -11,7 +11,7 @@
 #include "Components/SplineComponent.h"
 #include "Input/AuraInputComponent.h"
 #include "Interaction/EnemyInterface.h"
-#include "GameFramework/Actor.h"
+#include "GameFramework/Character.h"
 #include "UI/Widget/DamageTextComponent.h"
 
 AAuraPlayerController::AAuraPlayerController()
@@ -30,18 +30,18 @@ void AAuraPlayerController::PlayerTick(float DeltaTime)
 	AutoRun();
 }
 
-void AAuraPlayerController::ShowDamageNumber_Implementation(float DamageAmount, AActor* TargetActor)
+void AAuraPlayerController::ShowDamageNumber_Implementation(float DamageAmount, ACharacter* TargetCharacter)
 {
 	// IsValid also checks to see if that pointer is pending kill (may have had destroy call on it recently)
-	if (IsValid(TargetActor) && DamageTextComponentClass)
+	if (IsValid(TargetCharacter) && DamageTextComponentClass)
 	{
-		UDamageTextComponent* DamageText = NewObject<UDamageTextComponent>(TargetActor, DamageTextComponentClass);
+		UDamageTextComponent* DamageText = NewObject<UDamageTextComponent>(TargetCharacter, DamageTextComponentClass);
 		/*
 		 * When creating dynamically not in the constructor, we manually register this component
 		 * 调用RegisterComponent, 会初始化其中的Widget
 		 */
 		DamageText->RegisterComponent();
-		DamageText->AttachToComponent(TargetActor->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform); // 设置动画播放位置
+		DamageText->AttachToComponent(TargetCharacter->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform); // 设置动画播放位置
 		DamageText->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
 		DamageText->SetDamageText(DamageAmount);
 	}
