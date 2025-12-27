@@ -24,7 +24,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="cidr-memory-view://0" root0="FORCE_HIGHLIGHTING" />
+    <setting file="cidr-memory-view://3" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/Character/AuraCharacter.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/Player/AuraPlayerController.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/Character/AuraCharacter.h" root0="FORCE_HIGHLIGHTING" />
@@ -243,7 +243,7 @@
       <workItem from="1766655468152" duration="13432000" />
       <workItem from="1766746772890" duration="1241000" />
       <workItem from="1766765646072" duration="1358000" />
-      <workItem from="1766829403394" duration="7142000" />
+      <workItem from="1766829403394" duration="10013000" />
     </task>
     <servers />
   </component>
