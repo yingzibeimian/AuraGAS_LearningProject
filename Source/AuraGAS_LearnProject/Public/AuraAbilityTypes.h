@@ -23,6 +23,19 @@ public:
 		return FGameplayEffectContext::StaticStruct();
 	}
 	
+	/** Creates a copy of this context, used to duplicate for later modifications */
+	virtual FAuraGameplayEffectContext* Duplicate() const
+	{
+		FAuraGameplayEffectContext* NewContext = new FAuraGameplayEffectContext();
+		*NewContext = *this;
+		if (GetHitResult())
+		{
+			// Does a deep copy of the hit result
+			NewContext->AddHitResult(*GetHitResult(), true);
+		}
+		return NewContext;
+	}
+	
 	/** Custom serialization, subclasses must override this */
 	// Serialization 序列化: 用于保存该Struct, 通过网络发送该Struct等
 	// Take a Struct, convert it into bits (0/1) and send those bits in a stream across the Internet. It's necessary to replicate
@@ -36,4 +49,14 @@ protected:
 	UPROPERTY()
 	bool bIsCriticalHit = false;
 	
+};
+
+template<>
+struct TStructOpsTypeTraits< FAuraGameplayEffectContext > : public TStructOpsTypeTraitsBase2< FAuraGameplayEffectContext >
+{
+	enum
+	{
+		WithNetSerializer = true,
+		WithCopy = true		// Necessary so that TSharedPtr<FHitResult> Data is copied around
+	};
 };
