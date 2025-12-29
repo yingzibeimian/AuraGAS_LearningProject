@@ -82,6 +82,10 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	TargetBlockChance = FMath::Clamp<float>(TargetBlockChance, 0.f, 100.f);
 	
 	const bool bBlocked = FMath::RandRange(1, 100) < TargetBlockChance;
+	
+	FGameplayEffectContextHandle EffectContext = Spec.GetContext();
+	UAuraAbilitySystemLibrary::SetIsBlockedHit(EffectContext, bBlocked); // 在EffectContext中标记这次GE_Damage的状态为IsBlockedHit
+	
 	// If Block, halve the damage
 	Damage = bBlocked ? Damage * 0.5f : Damage;
 	
@@ -125,6 +129,8 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	// Critical Hit Resistance reduces Critical Hit Chance by a certain percentage
 	const float EffectiveCriticalHitChance = SourceCriticalHitChance - TargetCriticalHitResistance * CriticalHitResistanceCoefficient;
 	const bool bCriticalHit = FMath::RandRange(1, 100) < EffectiveCriticalHitChance;
+	
+	UAuraAbilitySystemLibrary::SetIsCriticalHit(EffectContext, bCriticalHit); // 在EffectContext中标记这次GE_Damage的状态为IsCriticalHit
 	
 	// Double damage plus a bonus if critical hit
 	Damage = bCriticalHit ? Damage * 2.f + SourceCriticalHitDamage : Damage;
