@@ -51,6 +51,14 @@ protected:
 	
 };
 
+/**
+ * 模板特化（Template Specialization）
+ * template<> 不是定义新模板, 它是在 “告诉编译器：某个具体类型要用特殊规则”
+ *
+ * 即告诉 UE 的反射 / 序列化系统：
+ * 当处理 FAuraGameplayEffectContext 这个 Struct 时，
+ * 需要启用哪些“特殊能力”
+ */
 template<>
 struct TStructOpsTypeTraits< FAuraGameplayEffectContext > : public TStructOpsTypeTraitsBase2< FAuraGameplayEffectContext >
 {

@@ -9,6 +9,7 @@
   <component name="ChangeListManager">
     <list default="true" id="baffbef2-f63c-44a0-a263-ab5800f28f37" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.AuraGAS_LearnProject.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AuraGAS_LearnProject.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultGame.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultGame.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/AuraAbilityTypes.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/AuraAbilityTypes.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -47,6 +48,7 @@
     <setting file="file://$PROJECT_DIR$/../../../epicgames_ue5/UE_5.2/Engine/Source/Runtime/Core/Public/UObject/WeakObjectPtrTemplates.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../epicgames_ue5/UE_5.2/Engine/Source/Runtime/CoreUObject/Private/UObject/Class.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../epicgames_ue5/UE_5.2/Engine/Source/Runtime/CoreUObject/Private/UObject/ScriptCore.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../../epicgames_ue5/UE_5.2/Engine/Source/Runtime/CoreUObject/Private/UObject/UObjectGlobals.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../epicgames_ue5/UE_5.2/Engine/Source/Runtime/CoreUObject/Public/UObject/Object.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../epicgames_ue5/UE_5.2/Engine/Source/Runtime/CoreUObject/Public/UObject/SparseDelegate.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../epicgames_ue5/UE_5.2/Engine/Source/Runtime/Engine/Classes/AI/Navigation/NavRelevantInterface.h" root0="FORCE_HIGHLIGHTING" />
@@ -255,7 +257,10 @@
       <workItem from="1766853283457" duration="1155000" />
       <workItem from="1766903473657" duration="7278000" />
       <workItem from="1766925787033" duration="1474000" />
-      <workItem from="1766928398777" duration="11431000" />
+      <workItem from="1766928398777" duration="12112000" />
+      <workItem from="1766986920815" duration="3121000" />
+      <workItem from="1766999407973" duration="490000" />
+      <workItem from="1767000013521" duration="303000" />
     </task>
     <servers />
   </component>
