@@ -4,6 +4,7 @@
 #include "Character/AuraCharacterBase.h"
 #include "AbilitySystemComponent.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
+#include "AbilitySystem/AuraAttributeSet.h"
 #include "AuraGAS_LearnProject/AuraGAS_LearnProject.h"
 #include "Components/CapsuleComponent.h"
 
@@ -88,6 +89,46 @@ void AAuraCharacterBase::InitializeDefaultAttributes() const
 	ApplyEffectToSelf(DefaultPrimaryAttributes, 1.f);
 	ApplyEffectToSelf(DefaultSecondaryAttributes, 1.f);
 	ApplyEffectToSelf(DefaultVitalAttributes, 1.f);
+	
+	/*
+	 * 监听主属性变化，用于在主属性发生改变时重新 Apply 一次派生属性 GE，确保派生属性始终与主属性保持一致
+	 * (原本使用 Infinite GE 持续更新派生属性，但在PIE的服务器端/Listen Server 上不生效,
+	 *	因此改为当前改为在初始化和属性变化时应用 Instant GE，确保服务器端也能正确同步派生属性。
+	 *	如果未来发现问题，可考虑回退到 Infinite GE)
+	 */
+	BindPrimaryAttributeDelegates();
+}
+
+void AAuraCharacterBase::BindPrimaryAttributeDelegates() const
+{
+	if (!HasAuthority()) return;
+	
+	const UAuraAttributeSet* AS = Cast<UAuraAttributeSet>(AttributeSet);
+	if (!AS) return;
+	
+	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AS->GetStrengthAttribute()).AddLambda(
+		[this](const FOnAttributeChangeData& Data)
+		{
+			ApplyEffectToSelf(DefaultSecondaryAttributes, 1.f);
+		});
+	
+	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AS->GetIntelligenceAttribute()).AddLambda(
+		[this](const FOnAttributeChangeData& Data)
+		{
+			ApplyEffectToSelf(DefaultSecondaryAttributes, 1.f);
+		});
+	
+	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AS->GetResilienceAttribute()).AddLambda(
+		[this](const FOnAttributeChangeData& Data)
+		{
+			ApplyEffectToSelf(DefaultSecondaryAttributes, 1.f);
+		});
+	
+	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AS->GetVigorAttribute()).AddLambda(
+		[this](const FOnAttributeChangeData& Data)
+		{
+			ApplyEffectToSelf(DefaultSecondaryAttributes, 1.f);
+		});
 }
 
 void AAuraCharacterBase::AddCharacterAbilities()
