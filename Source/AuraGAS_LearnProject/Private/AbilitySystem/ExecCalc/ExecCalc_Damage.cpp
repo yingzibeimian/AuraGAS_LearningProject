@@ -2,6 +2,9 @@
 
 
 #include "AbilitySystem/ExecCalc/ExecCalc_Damage.h"
+
+#include <mutex>
+
 #include "AbilitySystemComponent.h"
 #include "AuraGameplayTags.h"
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
@@ -11,6 +14,10 @@
 
 struct AuraDamageStatics
 {
+	/*
+	 * Attribute Capture Definitions
+	 * 这些 CaptureDef 只依赖 AttributeSet 的反射信息，与 GameplayTag 的注册时机【完全无关】，因此可以安全地在构造函数中初始化。
+	 */
 	// 用宏声明 FProperty* P##Property 和 FGameplayEffectAttributeCaptureDefinition P##Def
 	DECLARE_ATTRIBUTE_CAPTUREDEF(Armor);
 	DECLARE_ATTRIBUTE_CAPTUREDEF(ArmorPenetration)
@@ -19,8 +26,31 @@ struct AuraDamageStatics
 	DECLARE_ATTRIBUTE_CAPTUREDEF(CriticalHitDamage);
 	DECLARE_ATTRIBUTE_CAPTUREDEF(CriticalHitResistance);
 	
+	DECLARE_ATTRIBUTE_CAPTUREDEF(FireResistance);
+	DECLARE_ATTRIBUTE_CAPTUREDEF(LightningResistance);
+	DECLARE_ATTRIBUTE_CAPTUREDEF(ArcaneResistance);
+	DECLARE_ATTRIBUTE_CAPTUREDEF(PhysicalResistance);
+	
+	/*
+	 * GameplayTag -> CaptureDef 映射表
+	 * 注意：
+	 * GameplayTag 的原生注册发生在UAuraAssetManager::StartInitialLoading 中，
+	 * 而 ExecCalc / 静态对象的构造可能发生得【更早】。
+	 * 因此这个 Map 不能在构造函数中初始化，必须延迟到 GameplayTag 确保已注册之后。
+	 */
+	mutable TMap<FGameplayTag, FGameplayEffectAttributeCaptureDefinition> TagsToCaptureDefs;
+	
+	// 用于保证懒加载逻辑在多线程环境下只执行一次
+	mutable std::once_flag InitOnce;
+	
 	AuraDamageStatics()
 	{
+		/*
+		 * 这里仅做 Attribute CaptureDef 的定义：
+		 * DEFINE_ATTRIBUTE_CAPTUREDEF 只依赖 AttributeSet, 不会访问 GameplayTag, 在 CDO / 静态初始化阶段调用是安全的
+		 * 这里绝对不能访问 FAuraGameplayTags, 否则可能在 Tag 尚未注册时拿到 Invalid Tag
+		 */
+		
 		/*
 		 * 宏作用: 替代以下
 		 * ArmorDef.AttributeToCapture = UAuraAttributeSet::GetVigorAttribute();
@@ -33,6 +63,41 @@ struct AuraDamageStatics
 		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, CriticalHitChance, Source, false);
 		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, CriticalHitResistance, Target, false);
 		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, CriticalHitDamage, Source, false);
+		
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, FireResistance, Target, false);
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, LightningResistance, Target, false);
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, ArcaneResistance, Target, false);
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, PhysicalResistance, Target, false);
+	}
+	
+	void InitTagsToCaptureDefsIfNeeded() const
+	{
+		/*
+		 * 懒加载（Lazy Initialization）：
+		 * Tag -> CaptureDef 的映射只在“真正需要用到时”才构建
+		 * Execute_Implementation 一定发生在游戏运行期, 此时 UAuraAssetManager::StartInitialLoading 已经完成，所有原生 GameplayTag 都已注册
+		 *
+		 * std::call_once 保证：
+		 * - 即使未来 ExecCalc 在多线程中被调用
+		 * - 初始化逻辑也只会执行一次
+		 * - 避免重复 Add / 数据竞争
+		 */
+		std::call_once(InitOnce, [this]()
+		{
+			const FAuraGameplayTags& Tags = FAuraGameplayTags::Get();
+
+			TagsToCaptureDefs.Add(Tags.Attributes_Secondary_Armor, ArmorDef);
+			TagsToCaptureDefs.Add(Tags.Attributes_Secondary_BlockChance, BlockChanceDef);
+			TagsToCaptureDefs.Add(Tags.Attributes_Secondary_ArmorPenetration, ArmorPenetrationDef);
+			TagsToCaptureDefs.Add(Tags.Attributes_Secondary_CriticalHitChance, CriticalHitChanceDef);
+			TagsToCaptureDefs.Add(Tags.Attributes_Secondary_CriticalHitResistance, CriticalHitResistanceDef);
+			TagsToCaptureDefs.Add(Tags.Attributes_Secondary_CriticalHitDamage, CriticalHitDamageDef);
+
+			TagsToCaptureDefs.Add(Tags.Attributes_Resistance_Fire, FireResistanceDef);
+			TagsToCaptureDefs.Add(Tags.Attributes_Resistance_Lightning, LightningResistanceDef);
+			TagsToCaptureDefs.Add(Tags.Attributes_Resistance_Arcane, ArcaneResistanceDef);
+			TagsToCaptureDefs.Add(Tags.Attributes_Resistance_Physical, PhysicalResistanceDef);
+		});
 	}
 };
 
@@ -51,11 +116,19 @@ UExecCalc_Damage::UExecCalc_Damage()
 	RelevantAttributesToCapture.Add(DamageStatics().CriticalHitChanceDef);
 	RelevantAttributesToCapture.Add(DamageStatics().CriticalHitResistanceDef);
 	RelevantAttributesToCapture.Add(DamageStatics().CriticalHitDamageDef);
+	
+	RelevantAttributesToCapture.Add(DamageStatics().FireResistanceDef);
+	RelevantAttributesToCapture.Add(DamageStatics().LightningResistanceDef);
+	RelevantAttributesToCapture.Add(DamageStatics().ArcaneResistanceDef);
+	RelevantAttributesToCapture.Add(DamageStatics().PhysicalResistanceDef);
 }
 
 void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecutionParameters& ExecutionParams,
 	FGameplayEffectCustomExecutionOutput& OutExecutionOutput) const
 {
+	// 在第一次使用单例结构AuraDamageStatics之前，显式确保初始化
+	DamageStatics().InitTagsToCaptureDefsIfNeeded();
+	
 	const UAbilitySystemComponent* SourceASC = ExecutionParams.GetSourceAbilitySystemComponent();
 	const UAbilitySystemComponent* TargetASC = ExecutionParams.GetTargetAbilitySystemComponent();
 	
@@ -77,7 +150,20 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	float Damage = 0.f;
 	for (const TPair<FGameplayTag, FGameplayTag>& Pair : FAuraGameplayTags::Get().DamageTypesToResistances)
 	{
-		const float DamageTypeValue = Spec.GetSetByCallerMagnitude(Pair.Key);
+		const FGameplayTag DamageTypeTag = Pair.Key;
+		const FGameplayTag ResistanceTypeTag = Pair.Value;
+		
+		checkf(DamageStatics().TagsToCaptureDefs.Contains(ResistanceTypeTag), TEXT("TagsToCaptrueDefs doesn't contain Tag: [%s] in ExecCalc_Damage"), *ResistanceTypeTag.ToString());
+		const FGameplayEffectAttributeCaptureDefinition CaptureDef = DamageStatics().TagsToCaptureDefs[ResistanceTypeTag];
+		
+		float DamageTypeValue = Spec.GetSetByCallerMagnitude(DamageTypeTag);
+		
+		float Resistance = 0.f;
+		ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(CaptureDef, EvaluationParameters, Resistance);
+		Resistance = FMath::Clamp(Resistance, 0.f, 100.f);
+		
+		DamageTypeValue *= (100.f - Resistance) / 100.f;
+		
 		Damage += DamageTypeValue;
 	}
 	
