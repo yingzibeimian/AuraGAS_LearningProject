@@ -24,6 +24,8 @@ public:
 	
 	UPROPERTY(BlueprintReadWrite, meta = (ExposeOnSpawn = true))
 	FGameplayEffectSpecHandle DamageEffectSpecHandle;
+	
+	void EnableCollision() const;
 
 protected:
 	virtual void BeginPlay() override;
