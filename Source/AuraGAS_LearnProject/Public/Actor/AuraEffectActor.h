@@ -11,6 +11,28 @@
 class UGameplayEffect;
 
 UENUM(BlueprintType)
+enum class EEffectActorDestroyPolicy
+{
+	Never UMETA(
+		DisplayName = "Never",
+		ToolTip = 
+		"EffectActor will never be automatically destroyed.\nUse this if the actor applies Infinite Gameplay Effects."
+	),
+
+	AfterApplyOnOverlap UMETA(
+		DisplayName = "After Apply On Overlap",
+		ToolTip =
+		"Destroy the EffectActor immediately after applying effects with ApplyOnOverlap.\n\nRequirements:\n- All applied effects must be Instant or Duration.\n\nNotes:\n- Effects using ApplyOnEndOverlap will not be applied."
+	),
+
+	AfterApplyOnEndOverlap UMETA(
+		DisplayName = "After Apply On End Overlap",
+		ToolTip =
+		"Destroy the EffectActor after ApplyOnEndOverlap is processed.\n\nRequirements:\n- All applied effects must be Instant or Duration.\n\nNotes:\n- Even effects ApplyOnOverlap will only destroy the actor at EndOverlap."
+	)
+};
+
+UENUM(BlueprintType)
 enum class EEffectApplicationPolicy
 {
 	ApplyOnOverlap,
@@ -64,7 +86,10 @@ protected:
 	void OnEndOverlap(AActor* TargetActor);
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Applied Effects")
-	bool bDestroyOnEffectRemoval = false;
+	EEffectActorDestroyPolicy DestroyPolicy = EEffectActorDestroyPolicy::Never; //bool bDestroyOnEffectApplication = false;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Applied Effects")
+	bool bApplyEffectsToEnemies = false;
 	
 	// UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Applied Effects")
 	// TSubclassOf<UGameplayEffect> InstantGameplayEffectClass;
@@ -97,4 +122,9 @@ protected:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Applied Effects")
 	float ActorLevel = 1.f;
+	
+#if WITH_EDITOR
+	// 声明编辑器专用的属性修改回调
+	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
+#endif
 };

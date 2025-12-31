@@ -30,7 +30,7 @@ void AAuraEffectActor::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActo
 		const UAuraAttributeSet* AuraAttributeSet = Cast<UAuraAttributeSet>(ASCInterface->GetAbilitySystemComponent()->GetAttributeSet(UAuraAttributeSet::StaticClass()));
 		// Should not set the variables directly on the AttributeSet(or its subclass), 
 		// AttributeSet should either set its own attribute values or change values in respond to GameplayEffect
-		// For learning purpose, we ast away the constantness of "AuraAttributeSet" and will fix this up to have a better design later
+		// For learning purpose, we cast away the constantness of "AuraAttributeSet" and will fix this up to have a better design later
 		//AuraAttributeSet->SetHealth(AuraAttributeSet->GetHealth() + 25.f);
 		UAuraAttributeSet* MutableAuraAttributeSet = const_cast<UAuraAttributeSet*>(AuraAttributeSet);
 		MutableAuraAttributeSet->SetHealth(AuraAttributeSet->GetHealth() + 25.f);
@@ -96,6 +96,8 @@ void AAuraEffectActor::ApplyEffectToTarget(AActor* TargetActor, const FEffectCon
 void AAuraEffectActor::ApplyEffectToTargetFromArray(AActor* TargetActor, const TArray<FEffectConfig>& GameplayEffectClasses,
 	EEffectApplicationPolicy EffectApplicationPolicy)
 {
+	if (TargetActor->ActorHasTag(FName("Enemy")) && !bApplyEffectsToEnemies) return;
+	
 	for (const FEffectConfig& Config : GameplayEffectClasses)
 	{
 		if (Config.ApplicationPolicy ==  EffectApplicationPolicy)
@@ -107,6 +109,8 @@ void AAuraEffectActor::ApplyEffectToTargetFromArray(AActor* TargetActor, const T
 
 void AAuraEffectActor::OnOverlap(AActor* TargetActor)
 {
+	if (TargetActor->ActorHasTag(FName("Enemy")) && !bApplyEffectsToEnemies) return;
+	
 	// if (InstantEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnOverlap)
 	// {
 	// 	ApplyEffectToTarget(TargetActor, InstantGameplayEffectClass);
@@ -122,10 +126,14 @@ void AAuraEffectActor::OnOverlap(AActor* TargetActor)
 	ApplyEffectToTargetFromArray(TargetActor, InstantGameplayEffectClasses, EEffectApplicationPolicy::ApplyOnOverlap);
 	ApplyEffectToTargetFromArray(TargetActor, DurationGameplayEffectClasses, EEffectApplicationPolicy::ApplyOnOverlap);
 	ApplyEffectToTargetFromArray(TargetActor, InfiniteGameplayEffectClasses, EEffectApplicationPolicy::ApplyOnOverlap);
+	
+	if (DestroyPolicy == EEffectActorDestroyPolicy::AfterApplyOnOverlap) Destroy();
 }
 
 void AAuraEffectActor::OnEndOverlap(AActor* TargetActor)
 {
+	if (TargetActor->ActorHasTag(FName("Enemy")) && !bApplyEffectsToEnemies) return;
+	
 	// Apply Effect
 	// if (InstantEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnEndOverlap)
 	// {
@@ -179,6 +187,64 @@ void AAuraEffectActor::OnEndOverlap(AActor* TargetActor)
 		ActiveEffectHandles.Remove(Handle);
 	}
 	
+	if (DestroyPolicy == EEffectActorDestroyPolicy::AfterApplyOnEndOverlap) Destroy();
+	
 	// TODO: Multiple Effects (Arrays of each Duration Type, and how to apply them and remove the Infinite Effect)
 }
 
+#if WITH_EDITOR
+void AAuraEffectActor::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
+{
+	Super::PostEditChangeProperty(PropertyChangedEvent);
+	
+	switch (DestroyPolicy)
+	{
+	case EEffectActorDestroyPolicy::AfterApplyOnOverlap:
+		{
+			for (const FEffectConfig& Config : InstantGameplayEffectClasses)
+			{
+				if (Config.ApplicationPolicy == EEffectApplicationPolicy::ApplyOnEndOverlap)
+				{
+					UE_LOG(LogTemp, Warning,
+						TEXT("EffectActor %s: DestroyPolicy=AfterApplyOnOverlap but has Instant GE with ApplyOnEndOverlap"),
+						*GetName());
+				}
+			}
+			for (const FEffectConfig& Config : DurationGameplayEffectClasses)
+			{
+				if (Config.ApplicationPolicy == EEffectApplicationPolicy::ApplyOnEndOverlap)
+				{
+					UE_LOG(LogTemp, Warning,
+						TEXT("EffectActor %s: DestroyPolicy=AfterApplyOnOverlap but has Duration GE with ApplyOnEndOverlap"),
+						*GetName());
+				}
+			}
+			break;
+		}
+	case EEffectActorDestroyPolicy::AfterApplyOnEndOverlap:
+		{
+			for (const FEffectConfig& Config : InstantGameplayEffectClasses)
+			{
+				if (Config.ApplicationPolicy == EEffectApplicationPolicy::ApplyOnOverlap)
+				{
+					UE_LOG(LogTemp, Warning,
+						TEXT("EffectActor %s: DestroyPolicy=AfterApplyOnEndOverlap but has Instant GE with ApplyOnOverlap"),
+						*GetName());
+				}
+			}
+			for (const FEffectConfig& Config : DurationGameplayEffectClasses)
+			{
+				if (Config.ApplicationPolicy == EEffectApplicationPolicy::ApplyOnOverlap)
+				{
+					UE_LOG(LogTemp, Warning,
+						TEXT("EffectActor %s: DestroyPolicy=AfterApplyOnEndOverlap but has Duration GE with ApplyOnOverlap"),
+						*GetName());
+				}
+			}
+			break;
+		}
+	default:
+		break;
+	}
+}
+#endif
