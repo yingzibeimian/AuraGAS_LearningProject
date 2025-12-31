@@ -4,6 +4,7 @@
 #include "AI/BTService_FindNearestPlayer.h"
 
 #include "AIController.h"
+#include "Kismet/GameplayStatics.h"
 
 UBTService_FindNearestPlayer::UBTService_FindNearestPlayer()
 {
@@ -17,6 +18,10 @@ void UBTService_FindNearestPlayer::TickNode(UBehaviorTreeComponent& OwnerComp, u
 	AAIController* Controller = OwnerComp.GetAIOwner();
 	APawn* OwningPawn = Controller->GetPawn();
 	
-	GEngine->AddOnScreenDebugMessage(1, 1.f, FColor::Red, *Controller->GetName());
-	GEngine->AddOnScreenDebugMessage(2, 1.f, FColor::Green, *OwningPawn->GetName());
+	const FName TargetTag = OwningPawn->ActorHasTag(FName("Player")) ? FName("Enemy") : FName("Player");
+	
+	TArray<AActor*> ActorsWithTag;
+	UGameplayStatics::GetAllActorsWithTag(OwningPawn, TargetTag, ActorsWithTag);
+	
+	
 }
