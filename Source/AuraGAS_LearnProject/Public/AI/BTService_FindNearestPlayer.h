@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "BehaviorTree/Services/BTService_BlackboardBase.h"
 #include "BehaviorTree/Services/BTService_BlueprintBase.h"
 #include "BTService_FindNearestPlayer.generated.h"
 
@@ -11,7 +10,7 @@
  * 
  */
 UCLASS(Blueprintable)
-class AURAGAS_LEARNPROJECT_API UBTService_FindNearestPlayer : public UBTService_BlackboardBase
+class AURAGAS_LEARNPROJECT_API UBTService_FindNearestPlayer : public UBTService
 {
 	GENERATED_BODY()
 public:
