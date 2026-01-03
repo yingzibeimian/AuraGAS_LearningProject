@@ -9,11 +9,6 @@
 #include "BehaviorTree/Blackboard/BlackboardKeyType_Object.h"
 #include "Kismet/GameplayStatics.h"
 
-UBTService_FindNearestPlayer::UBTService_FindNearestPlayer()
-{
-	INIT_SERVICE_NODE_NOTIFY_FLAGS();
-}
-
 void UBTService_FindNearestPlayer::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
 	Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);

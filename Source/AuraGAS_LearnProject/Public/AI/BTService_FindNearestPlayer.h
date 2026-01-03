@@ -3,18 +3,16 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "BehaviorTree/BTService.h"
+#include "BTService_AuraBase.h"
 #include "BTService_FindNearestPlayer.generated.h"
 
 /**
  * 
  */
 UCLASS(Blueprintable)
-class AURAGAS_LEARNPROJECT_API UBTService_FindNearestPlayer : public UBTService
+class AURAGAS_LEARNPROJECT_API UBTService_FindNearestPlayer : public UBTService_AuraBase
 {
 	GENERATED_BODY()
-public:
-	UBTService_FindNearestPlayer();
 	
 protected:
 	
