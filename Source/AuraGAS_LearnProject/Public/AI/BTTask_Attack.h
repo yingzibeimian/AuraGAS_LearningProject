@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "BehaviorTree/BTTaskNode.h"
+#include "BTTask_AuraBase.h"
 #include "BTTask_Attack.generated.h"
 
 /**
  * 
  */
 UCLASS(Blueprintable)
-class AURAGAS_LEARNPROJECT_API UBTTask_Attack : public UBTTaskNode
+class AURAGAS_LEARNPROJECT_API UBTTask_Attack : public UBTTask_AuraBase
 {
 	GENERATED_BODY()
 	
