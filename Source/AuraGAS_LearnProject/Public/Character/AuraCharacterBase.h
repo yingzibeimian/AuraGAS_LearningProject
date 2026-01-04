@@ -33,12 +33,16 @@ public:
 	virtual FVector GetCombatSocketLocation_Implementation() override;
 	virtual bool IsDead_Implementation() const override;
 	virtual AActor* GetAvatar_Implementation() override;
+	virtual TArray<FTaggedMontage> GetAttackMontages_Implementation() override;
 	/** Combat Interface */
 	
 	// NetMulticast: 服务器调用一次，这个函数会在服务器 + 所有客户端上都执行, 适合死亡、武器掉落等"所有人都看得到的行为"
 	// Reliable: 保证这个 RPC 一定会被发送并执行，不会因为网络问题被丢弃。 Unreliable更轻量但可能会丢包
 	UFUNCTION(NetMulticast, Reliable)
 	virtual void MulticastHandleDeath();
+	
+	UPROPERTY(EditAnywhere, Category="Combat")
+	TArray<FTaggedMontage> AttackMontages;
 	
 protected:
 	// Called when the game starts or when spawned
