@@ -6,19 +6,30 @@
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystemComponent.h"
 #include "AIController.h"
+#include "BehaviorTree/BlackboardComponent.h"
+#include "Interaction/EnemyInterface.h"
 
 EBTNodeResult::Type UBTTask_Attack::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	AAIController* Controller = OwnerComp.GetAIOwner();
 	APawn* ControlledPawn = Controller->GetPawn();
 	
-	FGameplayTagContainer TagContainer = FGameplayTagContainer(AttackTag);
-	if (UAbilitySystemComponent* ASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(ControlledPawn))
-	{
-		ASC->TryActivateAbilitiesByTag(TagContainer);
-		
-		return EBTNodeResult::Succeeded;
-	}
+	UBlackboardComponent* BlackboardComp = OwnerComp.GetBlackboardComponent();
+	if (!BlackboardComp) return EBTNodeResult::Failed;
 	
-	return EBTNodeResult::Failed;
+	AActor* CombatTarget = Cast<AActor>(BlackboardComp->GetValueAsObject(CombatTargetSelector.SelectedKeyName));
+	if (!CombatTarget) return EBTNodeResult::Failed;
+	
+	IEnemyInterface* EnemyInterface = Cast<IEnemyInterface>(ControlledPawn);
+	if (!EnemyInterface) return EBTNodeResult::Failed;
+	
+	EnemyInterface->Execute_SetCombatTarget(ControlledPawn, CombatTarget);
+	
+	UAbilitySystemComponent* ASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(ControlledPawn);
+	if (!ASC) return EBTNodeResult::Failed;
+	
+	FGameplayTagContainer TagContainer = FGameplayTagContainer(AttackTag);
+	ASC->TryActivateAbilitiesByTag(TagContainer);
+    		
+	return EBTNodeResult::Succeeded;
 }

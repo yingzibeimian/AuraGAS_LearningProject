@@ -31,4 +31,10 @@ public:
 	// Any class that implements this interface will be required to override these pure virtual fuction
 	virtual void HighlightActor() = 0;
 	virtual void UnHighlightActor() = 0;
+	
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+	void SetCombatTarget(AActor* InCombatTarget);
+	
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+    AActor* GetCombatTarget() const;
 };

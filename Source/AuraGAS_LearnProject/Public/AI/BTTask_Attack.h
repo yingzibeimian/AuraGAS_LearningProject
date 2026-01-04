@@ -18,6 +18,9 @@ protected:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Default")
 	FGameplayTag AttackTag;
 	
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Default") 
+	FBlackboardKeySelector CombatTargetSelector;
+	
 private:
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 };
