@@ -20,10 +20,7 @@ EBTNodeResult::Type UBTTask_Attack::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 	AActor* CombatTarget = Cast<AActor>(BlackboardComp->GetValueAsObject(CombatTargetSelector.SelectedKeyName));
 	if (!CombatTarget) return EBTNodeResult::Failed;
 	
-	IEnemyInterface* EnemyInterface = Cast<IEnemyInterface>(ControlledPawn);
-	if (!EnemyInterface) return EBTNodeResult::Failed;
-	
-	EnemyInterface->Execute_SetCombatTarget(ControlledPawn, CombatTarget);
+	IEnemyInterface::Execute_SetCombatTarget(ControlledPawn, CombatTarget);
 	
 	UAbilitySystemComponent* ASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(ControlledPawn);
 	if (!ASC) return EBTNodeResult::Failed;
