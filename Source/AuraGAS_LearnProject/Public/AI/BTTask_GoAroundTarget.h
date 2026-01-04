@@ -16,7 +16,7 @@ class AURAGAS_LEARNPROJECT_API UBTTask_GoAroundTarget : public UBTTask_AuraBase
 	
 protected:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Default")
-    FBlackboardKeySelector NewLocationSelector; 
+    FBlackboardKeySelector NewLocationSelector;
  
     UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Default")
     FBlackboardKeySelector TargetSelector;

@@ -9,6 +9,7 @@ UBTTask_AuraBase::UBTTask_AuraBase(const FObjectInitializer& ObjectInitializer) 
 {
 	const UClass* StopAtClass = GetClass();
 	INIT_TASK_NODE_NOTIFY_FLAGS();
+	
 	bShowPropertyDetails = true;
 	if (HasAnyFlags(RF_ClassDefaultObject))
 	{

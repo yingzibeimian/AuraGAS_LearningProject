@@ -14,6 +14,10 @@ class AURAGAS_LEARNPROJECT_API UBTTask_Attack : public UBTTask_AuraBase
 {
 	GENERATED_BODY()
 	
+protected:
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Default")
+	FGameplayTag AttackTag;
+	
 private:
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 };

@@ -8,7 +8,14 @@
 UBTService_AuraBase::UBTService_AuraBase(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
 	const UClass* StopAtClass = GetClass();
-	INIT_SERVICE_NODE_NOTIFY_FLAGS();
+	
+	// Aura services always tick
+	bNotifyTick = true;
+	bNotifyOnSearch = true;
+
+	// Match Blueprint service behavior
+	bCreateNodeInstance = true;
+	
 	bShowPropertyDetails = true;
 	if (HasAnyFlags(RF_ClassDefaultObject))
 	{
