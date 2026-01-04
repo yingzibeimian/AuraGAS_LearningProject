@@ -14,6 +14,11 @@ class AURAGAS_LEARNPROJECT_API UAuraDamageGameplayAbility : public UAuraGameplay
 {
 	GENERATED_BODY()
 	
+public:
+	
+	UFUNCTION(BlueprintCallable)
+	void CauseDamage(AActor* TargetActor);
+	
 protected:
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
