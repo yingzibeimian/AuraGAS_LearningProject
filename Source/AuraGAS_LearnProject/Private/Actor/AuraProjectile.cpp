@@ -74,13 +74,8 @@ void AAuraProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, 
 	 * bHit 用于解决 OnSphereOverlap 与 Destroy 在 Client 上可能产生的竞态，防止特效与音效重复播放。
 	 */
 	
-	// Overlap只在“数据完整”的情况下才响应
-	if (!DamageEffectSpecHandle.IsValid())
-	{
-		return;
-	}
-	// 防止火球碰撞到自己
-	if (DamageEffectSpecHandle.Data.IsValid() && DamageEffectSpecHandle.Data.Get()->GetContext().GetEffectCauser() == OtherActor)
+	// Overlap只在“数据完整”的情况下才响应, 并防止火球碰撞到自己
+	if (!DamageEffectSpecHandle.Data.IsValid() || DamageEffectSpecHandle.Data.Get()->GetContext().GetEffectCauser() == OtherActor)
 	{
 		return;
 	}
