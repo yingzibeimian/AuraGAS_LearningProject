@@ -7,30 +7,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="baffbef2-f63c-44a0-a263-ab5800f28f37" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Content/Blueprints/Character/Shaman/ABP_Shaman.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Blueprints/Character/Shaman/BP_Shaman.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.AuraGAS_LearnProject.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AuraGAS_LearnProject.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/Animations/Death.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/Animations/Death.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/Animations/Shaman_Attack.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/Animations/Shaman_Attack.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/Animations/Shaman_Idle.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/Animations/Shaman_Idle.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/Animations/Shaman_Summon.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/Animations/Shaman_Summon.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/Animations/Shaman_Walk.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/Animations/Shaman_Walk.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/Materials/M_Shaman.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/Materials/M_Shaman.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/Materials/Shaman_low_M_Shaman_Body_BaseColor.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/Materials/Shaman_low_M_Shaman_Body_BaseColor.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/Materials/Shaman_low_M_Shaman_Body_Normal.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/Materials/Shaman_low_M_Shaman_Body_Normal.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/Materials/Shaman_low_M_Shaman_Body_OcclusionRoughnessMetallic.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/Materials/Shaman_low_M_Shaman_Body_OcclusionRoughnessMetallic.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/PA_Shaman.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/PA_Shaman.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/SKM_Shaman.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/SKM_Shaman.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/SK_Shaman.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/SK_Shaman.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/SM_Shaman.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/SM_Shaman.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/ShamanStaff/Materials/M_Staff.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/ShamanStaff/Materials/M_Staff.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/ShamanStaff/Materials/Staff_low_M_Staff_BaseColor.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/ShamanStaff/Materials/Staff_low_M_Staff_BaseColor.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/ShamanStaff/Materials/Staff_low_M_Staff_Normal.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/ShamanStaff/Materials/Staff_low_M_Staff_Normal.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/ShamanStaff/Materials/Staff_low_M_Staff_OcclusionRoughnessMetallic.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/ShamanStaff/Materials/Staff_low_M_Staff_OcclusionRoughnessMetallic.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/ShamanStaff/SM_Staff_1_25.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Enemies/Shaman/ShamanStaff/SM_Staff_1_25.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Maps/StartupMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/StartupMap.umap" afterDir="false" />
-    </list>
+    <list default="true" id="baffbef2-f63c-44a0-a263-ab5800f28f37" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -43,7 +20,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="cidr-memory-view://0" root0="FORCE_HIGHLIGHTING" />
+    <setting file="cidr-memory-view://1" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/AuraAbilityTypes.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/Character/AuraCharacter.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/Player/AuraPlayerController.cpp" root0="FORCE_HIGHLIGHTING" />
@@ -331,7 +308,7 @@
       <workItem from="1767587598042" duration="10902000" />
       <workItem from="1767608600421" duration="1312000" />
       <workItem from="1767624894449" duration="6945000" />
-      <workItem from="1767694908852" duration="1538000" />
+      <workItem from="1767694908852" duration="2161000" />
     </task>
     <servers />
   </component>
