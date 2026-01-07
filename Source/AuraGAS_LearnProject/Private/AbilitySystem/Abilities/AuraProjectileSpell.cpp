@@ -23,7 +23,7 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 	
 	const FVector SocketLocation = ICombatInterface::Execute_GetCombatSocketLocation(
 		GetAvatarActorFromActorInfo(),
-		FAuraGameplayTags::Get().Montage_Attack_Weapon);
+		FAuraGameplayTags::Get().CombatSocket_Weapon);
     FRotator Rotation = (ProjectileTargetLocation - SocketLocation).Rotation();
     //Rotation.Pitch = 0.f; // 让Projectile与地面保持平行状态飞行 (Play as Client时客户端的火球位置会过高导致攻击不到Goblin, 因此注释掉)
     

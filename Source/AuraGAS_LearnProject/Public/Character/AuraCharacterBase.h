@@ -36,6 +36,7 @@ public:
 	virtual AActor* GetAvatar_Implementation() override;
 	virtual TArray<FTaggedMontage> GetAttackMontages_Implementation() override;
 	virtual UNiagaraSystem* GetBloodEffect_Implementation() override;
+	virtual FTaggedMontage GetTaggedMontageByTag_Implementation(const FGameplayTag& MontageTag) override;
 	/** Combat Interface */
 	
 	// NetMulticast: 服务器调用一次，这个函数会在服务器 + 所有客户端上都执行, 适合死亡、武器掉落等"所有人都看得到的行为"
