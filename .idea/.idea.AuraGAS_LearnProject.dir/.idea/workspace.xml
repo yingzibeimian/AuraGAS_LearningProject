@@ -8,12 +8,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="baffbef2-f63c-44a0-a263-ab5800f28f37" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Content/Assets/Effects/Combat/NS_SlingshotImpact.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Effects/Combat/NS_SlingshotImpact.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Assets/Enemies/Goblin/Animations/Slingshot/AM_HitReact_GoblinSlingshot.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Enemies/Goblin/Animations/Slingshot/AM_HitReact_GoblinSlingshot.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Assets/Enemies/Goblin/Slingshot/Materials/SlingshotRock/M_SlingshotRock.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Enemies/Goblin/Slingshot/Materials/SlingshotRock/M_SlingshotRock.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/AbilitySystem/Enemy/Abilities/BP_SlingshotRock.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/AbilitySystem/Enemy/Abilities/BP_SlingshotRock.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Maps/StartupMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/StartupMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/Actor/AuraProjectile.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/Actor/AuraProjectile.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Assets/Effects/Combat/Trail/NS_CombatTrail.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Effects/Combat/Trail/NS_CombatTrail.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Assets/Enemies/Ghoul/Animationa/AM_Attack_L.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Enemies/Ghoul/Animationa/AM_Attack_L.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Assets/Enemies/Ghoul/Animationa/AM_Attack_R.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Enemies/Ghoul/Animationa/AM_Attack_R.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Assets/Enemies/Ghoul/SK_Ghoul.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Enemies/Ghoul/SK_Ghoul.uasset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +25,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="cidr-memory-view://3" root0="FORCE_HIGHLIGHTING" />
+    <setting file="cidr-memory-view://5" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/AuraAbilityTypes.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/Character/AuraCharacter.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/Player/AuraPlayerController.cpp" root0="FORCE_HIGHLIGHTING" />
@@ -317,7 +315,7 @@
       <workItem from="1767624894449" duration="6945000" />
       <workItem from="1767694908852" duration="2871000" />
       <workItem from="1767707393825" duration="7115000" />
-      <workItem from="1767778409101" duration="7121000" />
+      <workItem from="1767778409101" duration="8008000" />
     </task>
     <servers />
   </component>
