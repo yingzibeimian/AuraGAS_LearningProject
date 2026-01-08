@@ -8,12 +8,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="baffbef2-f63c-44a0-a263-ab5800f28f37" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.AuraGAS_LearnProject.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AuraGAS_LearnProject.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Assets/Enemies/Demon/SKM_Demon.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Enemies/Demon/SKM_Demon.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Assets/Enemies/Demon/SK_Demon.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Enemies/Demon/SK_Demon.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Blueprints/Character/Demon/BP_Demon.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Character/Demon/BP_Demon.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/AuraGameplayTags.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/AuraGameplayTags.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/Character/AuraCharacterBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/Character/AuraCharacterBase.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/AuraGameplayTags.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/AuraGameplayTags.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/Character/AuraCharacterBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/Character/AuraCharacterBase.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Maps/StartupMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/StartupMap.umap" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -318,7 +316,7 @@
       <workItem from="1767694908852" duration="2871000" />
       <workItem from="1767707393825" duration="7115000" />
       <workItem from="1767778409101" duration="9294000" />
-      <workItem from="1767844972138" duration="1622000" />
+      <workItem from="1767844972138" duration="2255000" />
     </task>
     <servers />
   </component>
