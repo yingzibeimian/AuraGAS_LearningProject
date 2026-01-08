@@ -16,7 +16,7 @@ void UAuraProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandle Hand
 	
 }
 
-void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocation, const FGameplayTag& SocketTag)
+void UAuraProjectileSpell::SpawnProjectile_Implementation(const FVector& ProjectileTargetLocation, const FGameplayTag& SocketTag, bool bOverridePitch, float PitchOverride)
 {
 	const bool bIsServer = GetAvatarActorFromActorInfo()->HasAuthority();;
 	if (!bIsServer) return;
@@ -24,7 +24,11 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 	const FVector SocketLocation = ICombatInterface::Execute_GetCombatSocketLocation(GetAvatarActorFromActorInfo(), SocketTag);
     FRotator Rotation = (ProjectileTargetLocation - SocketLocation).Rotation();
     //Rotation.Pitch = 0.f; // 让Projectile与地面保持平行状态飞行 (Play as Client时客户端的火球位置会过高导致攻击不到Goblin, 因此注释掉)
-    
+	if (bOverridePitch)
+	{
+		Rotation.Pitch = PitchOverride;
+	}
+	
     FTransform SpawnTransform;
     SpawnTransform.SetLocation(SocketLocation);
     SpawnTransform.SetRotation(Rotation.Quaternion());
