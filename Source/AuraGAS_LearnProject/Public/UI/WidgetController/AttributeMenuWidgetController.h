@@ -6,6 +6,7 @@
 #include "UI/WidgetController/AuraWidgetController.h"
 #include "AttributeMenuWidgetController.generated.h"
 
+class UAttributeInfo;
 struct FGameplayAttribute;
 struct FGameplayTag;
 struct FAuraAttributeInfo;
