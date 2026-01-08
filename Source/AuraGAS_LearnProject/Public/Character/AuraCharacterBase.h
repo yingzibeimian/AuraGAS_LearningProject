@@ -38,6 +38,7 @@ public:
 	virtual UNiagaraSystem* GetBloodEffect_Implementation() override;
 	virtual FTaggedMontage GetTaggedMontageByTag_Implementation(const FGameplayTag& MontageTag) override;
 	virtual int32 GetMinionCount_Implementation() override;
+	virtual void IncrementMinionCount_Implementation(int32 Amount) override;
 	/** Combat Interface */
 	
 	// NetMulticast: 服务器调用一次，这个函数会在服务器 + 所有客户端上都执行, 适合死亡、武器掉落等"所有人都看得到的行为"
