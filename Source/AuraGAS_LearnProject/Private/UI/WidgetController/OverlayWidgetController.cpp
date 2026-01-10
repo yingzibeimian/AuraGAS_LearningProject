@@ -16,7 +16,7 @@ void UOverlayWidgetController::BroadcastInitialValues()
 	OnMaxManaChanged.Broadcast(AuraAttributeSet->GetMaxMana());
 }
 
-/// 监听属性变化
+/// 监听数据变化
 void UOverlayWidgetController::BindCallbacksToDependencies()
 {
 	const UAuraAttributeSet* AuraAttributeSet = CastChecked<UAuraAttributeSet>(AttributeSet);
@@ -48,22 +48,43 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 			}
 		);
 	
-	// 使用Lambda订阅多播委托EffectAssetTags
-	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->EffectAssetTags.AddLambda(
-		// [this]: capture this (the object that we're in)
-		[this](const FGameplayTagContainer& AssetTags)
+	if (UAuraAbilitySystemComponent* AuraASC = Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent))
+	{
+		// 绑定回调, 角色Ability数据添加完毕时, 向UI传输数据
+		if (AuraASC->bStartupAbilitiesGiven)
 		{
-			for (const FGameplayTag& Tag : AssetTags)
+			// ASC先添加完角色Ability, OverlayWidgetController后执行BindCallbacksToDependencies, 此时绑定回调无意义, 直接调用
+			OnInitializeStartupAbilities(AuraASC);
+		}
+		else
+		{
+			// OverlayWidgetController先绑定回调, ASC后添加完角色Ability
+			AuraASC->AbilitiesGivenDelegate.AddUObject(this, &UOverlayWidgetController::OnInitializeStartupAbilities);
+		}
+	
+		// 使用Lambda订阅多播委托EffectAssetTags
+		AuraASC->EffectAssetTags.AddLambda(
+			// [this]: capture this (the object that we're in)
+			[this](const FGameplayTagContainer& AssetTags)
 			{
-				// For example, say that Tag = Message.HealthPotion
-				// "Message.HealthPotion".MatchesTag("Message") will return True, "Message".MatchesTag("Message.HealthPotion") will return False
-				FGameplayTag MessageTag = FGameplayTag::RequestGameplayTag(FName("Message"));
-				if (Tag.MatchesTag(MessageTag))
+				for (const FGameplayTag& Tag : AssetTags)
 				{
-					const FUIWidgetRow* Row = GetDataTableRowByTag<FUIWidgetRow>(MessageWidgetDataTable, Tag);
-					MessageWidgetRowDelegate.Broadcast(*Row);
+					// For example, say that Tag = Message.HealthPotion
+					// "Message.HealthPotion".MatchesTag("Message") will return True, "Message".MatchesTag("Message.HealthPotion") will return False
+					FGameplayTag MessageTag = FGameplayTag::RequestGameplayTag(FName("Message"));
+					if (Tag.MatchesTag(MessageTag))
+					{
+						const FUIWidgetRow* Row = GetDataTableRowByTag<FUIWidgetRow>(MessageWidgetDataTable, Tag);
+						MessageWidgetRowDelegate.Broadcast(*Row);
+					}
 				}
 			}
-		}
-	);
+		);
+	}
+}
+
+void UOverlayWidgetController::OnInitializeStartupAbilities(UAuraAbilitySystemComponent* AuraAbilitySystemComponent)
+{
+	//TODO Get information about all given abilities, look up their Ability Info, and broadcast it to widgets.
+	if (!AuraAbilitySystemComponent->bStartupAbilitiesGiven) return;
 }
