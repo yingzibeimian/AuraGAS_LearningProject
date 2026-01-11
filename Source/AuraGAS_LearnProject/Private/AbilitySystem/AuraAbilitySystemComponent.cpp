@@ -26,7 +26,7 @@ void UAuraAbilitySystemComponent::AddCharacterAbilities(const TArray<TSubclassOf
 		}
 	}
 	bStartupAbilitiesGiven = true;
-	AbilitiesGivenDelegate.Broadcast(this); // 角色Ability添加完毕, 广播通知OverlayWidgetController向UI进一步广播技能数据, 从而初始化技能栏UI
+	AbilitiesGivenDelegate.Broadcast(this); // 角色Ability添加完毕, 广播通知OverlayWidgetController向UI进一步广播技能数据, 从而初始化技能栏UI	
 }
 
 void UAuraAbilitySystemComponent::AbilityInputTagHeld(const FGameplayTag& InputTag)
@@ -97,6 +97,18 @@ FGameplayTag UAuraAbilitySystemComponent::GetInputTagFromSpec(const FGameplayAbi
 		}
 	}
 	return FGameplayTag();
+}
+
+void UAuraAbilitySystemComponent::OnRep_ActivateAbilities()
+{
+	Super::OnRep_ActivateAbilities();
+	
+	// 第一次即初始化Abilities时, 通知客户端同样广播
+	if (!bStartupAbilitiesGiven)
+	{
+		bStartupAbilitiesGiven = true;
+		AbilitiesGivenDelegate.Broadcast(this); // 角色Ability添加完毕, 广播通知OverlayWidgetController向UI进一步广播技能数据, 从而初始化技能栏UI	
+	}
 }
 
 void UAuraAbilitySystemComponent::ClientEffectApplied_Implementation(UAbilitySystemComponent* AbilitySystemComponent,
