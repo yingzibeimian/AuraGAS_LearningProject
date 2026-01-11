@@ -99,3 +99,34 @@ void UOverlayWidgetController::OnInitializeStartupAbilities(UAuraAbilitySystemCo
 	});
 	AuraAbilitySystemComponent->ForEachAbility(BroadcastDelegate);
 }
+
+// TODO(GAS Ability Failure UI Feedback):
+//
+// Bind to AbilitySystemComponent->AbilityFailedCallbacks to handle ability activation
+// failures that occur before ActivateAbility() (e.g. Cooldown, Cost).
+//
+// Architecture:
+// - Use FailureTags as the semantic reason for ability activation failure.
+// - Map FailureTag -> FailureFeedbackData (DataAsset).
+// - FailureFeedbackData contains:
+//     - FailureTag
+//     - DisplayText (FText)
+//     - TextColor
+//     - UISound
+//
+// Flow:
+// 1. AbilitySystemComponent broadcasts AbilityFailedCallbacks(Ability, FailureTags).
+// 2. Controller receives the callback and looks up FailureFeedbackData by FailureTag.
+// 3. Controller broadcasts a lightweight UI event with the resolved feedback data.
+// 4. UI binds to the event, displays floating text above character, applies text color,
+//    and plays the provided UI sound.
+//
+// Rules:
+// - Do NOT inspect cooldown or cost GameplayEffects directly.
+// - Do NOT place failure feedback logic inside GameplayAbility.
+// - UI layer must remain data-driven and unaware of GAS internals.
+//
+// Note:
+// UI failure feedback sounds are local-only and should be played directly by UI.
+// GameplayCues are intentionally NOT used here, as ability activation failures
+// do not represent gameplay state changes.
