@@ -8,7 +8,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="baffbef2-f63c-44a0-a263-ab5800f28f37" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.AuraGAS_LearnProject.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AuraGAS_LearnProject.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Assets/UI/Globes/MI_LockedBG.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/UI/Globes/MI_LockedBG.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/UI/SpellGlobes/WBP_SpellGlobe_Button.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/UI/SpellGlobes/WBP_SpellGlobe_Button.uasset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,7 +23,6 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="cidr-memory-view://0" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/AuraGAS_LearnProject/AuraLogChannels.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/AuraGAS_LearnProject/AuraLogChannels.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/AuraAbilityTypes.cpp" root0="FORCE_HIGHLIGHTING" />
@@ -343,7 +343,7 @@
       <workItem from="1768292949289" duration="6054000" />
       <workItem from="1768305003012" duration="10709000" />
       <workItem from="1768378197913" duration="5480000" />
-      <workItem from="1768405515185" duration="437000" />
+      <workItem from="1768405515185" duration="1098000" />
     </task>
     <servers />
   </component>
