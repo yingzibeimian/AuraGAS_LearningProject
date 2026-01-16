@@ -28,7 +28,7 @@ void UAuraAbilitySystemComponent::AddCharacterAbilities(const TArray<TSubclassOf
 		}
 	}
 	bStartupAbilitiesGiven = true;
-	AbilitiesGivenDelegate.Broadcast(this); // 角色Ability添加完毕, 广播通知OverlayWidgetController向UI进一步广播技能数据, 从而初始化技能栏UI	
+	AbilitiesGivenDelegate.Broadcast(); // 角色Ability添加完毕, 广播通知OverlayWidgetController向UI进一步广播技能数据, 从而初始化技能栏UI	
 }
 
 void UAuraAbilitySystemComponent::AddCharacterPassiveAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartupPassiveAbilities)
@@ -143,7 +143,7 @@ void UAuraAbilitySystemComponent::OnRep_ActivateAbilities()
 	if (!bStartupAbilitiesGiven)
 	{
 		bStartupAbilitiesGiven = true;
-		AbilitiesGivenDelegate.Broadcast(this); // 角色Ability添加完毕, 广播通知OverlayWidgetController向UI进一步广播技能数据, 从而初始化技能栏UI	
+		AbilitiesGivenDelegate.Broadcast(); // 角色Ability添加完毕, 广播通知OverlayWidgetController向UI进一步广播技能数据, 从而初始化技能栏UI	
 	}
 }
 
