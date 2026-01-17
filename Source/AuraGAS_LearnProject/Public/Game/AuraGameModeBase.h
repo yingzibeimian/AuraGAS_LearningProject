@@ -17,4 +17,7 @@ class AURAGAS_LEARNPROJECT_API AAuraGameModeBase : public AGameModeBase
 public:
 	UPROPERTY(EditDefaultsOnly, Category="Character Class Defaults")
 	TObjectPtr<UCharacterClassInfo> CharacterClassInfo;
+	
+	UPROPERTY(EditDefaultsOnly, Category="Ability Class Defaults")
+	TObjectPtr<UAbilityInfo> AbilityInfo;
 };
