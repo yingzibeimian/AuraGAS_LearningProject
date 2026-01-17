@@ -16,4 +16,7 @@ class AURAGAS_LEARNPROJECT_API USpellMenuWidgetController : public UAuraWidgetCo
 public:
 	virtual void BroadcastInitialValues() override;
 	virtual void BindCallbacksToDependencies() override;
+	
+	UPROPERTY(BlueprintAssignable)
+	FOnPlayerStatChangedSignature SpellPointsChanged;
 };
