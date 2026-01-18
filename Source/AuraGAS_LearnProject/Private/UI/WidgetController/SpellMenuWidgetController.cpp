@@ -17,6 +17,18 @@ void USpellMenuWidgetController::BindCallbacksToDependencies()
 {
 	GetAuraASC()->AbilityStatusChanged.AddLambda([this](const FGameplayTag& AbilityTag, const FGameplayTag& StatusTag)
 	{
+		// 由于升级时, AbilityStatusChanged和OnSpellPointsChangedDelegate都会广播, 不确定这里两个Lambda在服务器和客户端的执行顺序
+		// 如果从ASC获取Status, 以及从PS获取SpellPoints不一定正确
+		// 因此用本地变量SelectedAbility和CurrentSpellPoints跟踪所选择SpellGlobe对应的技能Status和正确的SpellPoints
+		if (SelectedAbility.Ability.MatchesTagExact(AbilityTag))
+		{
+			SelectedAbility.Status = StatusTag;
+			bool bEnableSpellPointsButton = false;
+			bool bEnableEquipButton = false;
+			ShouldEnableButtons(StatusTag, CurrentSpellPoints, bEnableSpellPointsButton, bEnableEquipButton);
+			SpellGlobeSelectedDelegate.Broadcast(bEnableSpellPointsButton, bEnableEquipButton);
+		}
+		
 		if (AbilityInfo)
 		{
 			FAuraAbilityInfo Info = AbilityInfo->FindAbilityInfoForTag(AbilityTag);
@@ -28,6 +40,12 @@ void USpellMenuWidgetController::BindCallbacksToDependencies()
 	GetAuraPS()->OnSpellPointsChangedDelegate.AddLambda([this](int32 NewSpellPoints)
 	{
 		SpellPointsChanged.Broadcast(NewSpellPoints);
+		CurrentSpellPoints = NewSpellPoints;
+		
+		bool bEnableSpellPointsButton = false;
+        bool bEnableEquipButton = false;
+        ShouldEnableButtons(SelectedAbility.Status, CurrentSpellPoints, bEnableSpellPointsButton, bEnableEquipButton);
+        SpellGlobeSelectedDelegate.Broadcast(bEnableSpellPointsButton, bEnableEquipButton);
 	});
 }
 
@@ -47,8 +65,11 @@ void USpellMenuWidgetController::SpellGlobeSelected(const FGameplayTag& AbilityT
 	}
 	else
 	{
-		AbilityStatus = GetAuraASC()->GetStatusFromSpec(*AbilitySpec);
+		AbilityStatus = GetAuraASC()->GetStatusFromSpec(*AbilitySpec); // Other Status
 	}
+	
+	SelectedAbility.Ability = AbilityTag;
+	SelectedAbility.Status = AbilityStatus;
 	
 	bool bEnableSpellPointsButton = false;
 	bool bEnableEquipButton = false;
