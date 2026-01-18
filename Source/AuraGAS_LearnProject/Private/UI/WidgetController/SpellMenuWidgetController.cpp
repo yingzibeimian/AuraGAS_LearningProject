@@ -26,7 +26,13 @@ void USpellMenuWidgetController::BindCallbacksToDependencies()
 			bool bEnableSpellPointsButton = false;
 			bool bEnableEquipButton = false;
 			ShouldEnableButtons(StatusTag, CurrentSpellPoints, bEnableSpellPointsButton, bEnableEquipButton);
-			SpellGlobeSelectedDelegate.Broadcast(bEnableSpellPointsButton, bEnableEquipButton);
+			
+			FString Description;
+			FString NextLevelDescription;
+			GetAuraASC()->GetDescriptionsByAbilityTag(AbilityTag, Description, NextLevelDescription);
+			
+			// 向UI广播信息: 是否启用SpellPoint按钮, 是否启用Equip按钮, 技能描述, 下一等级的技能描述
+			SpellGlobeSelectedDelegate.Broadcast(bEnableSpellPointsButton, bEnableEquipButton, Description, NextLevelDescription);
 		}
 		
 		if (AbilityInfo)
@@ -45,7 +51,12 @@ void USpellMenuWidgetController::BindCallbacksToDependencies()
 		bool bEnableSpellPointsButton = false;
         bool bEnableEquipButton = false;
         ShouldEnableButtons(SelectedAbility.Status, CurrentSpellPoints, bEnableSpellPointsButton, bEnableEquipButton);
-        SpellGlobeSelectedDelegate.Broadcast(bEnableSpellPointsButton, bEnableEquipButton);
+		
+		FString Description;
+		FString NextLevelDescription;
+		GetAuraASC()->GetDescriptionsByAbilityTag(SelectedAbility.Ability, Description, NextLevelDescription);
+		
+		SpellGlobeSelectedDelegate.Broadcast(bEnableSpellPointsButton, bEnableEquipButton, Description, NextLevelDescription);
 	});
 }
 
@@ -74,7 +85,12 @@ void USpellMenuWidgetController::SpellGlobeSelected(const FGameplayTag& AbilityT
 	bool bEnableSpellPointsButton = false;
 	bool bEnableEquipButton = false;
 	ShouldEnableButtons(AbilityStatus, SpellPoints, bEnableSpellPointsButton, bEnableEquipButton);
-	SpellGlobeSelectedDelegate.Broadcast(bEnableSpellPointsButton, bEnableEquipButton);
+	
+	FString Description;
+	FString NextLevelDescription;
+	GetAuraASC()->GetDescriptionsByAbilityTag(AbilityTag, Description, NextLevelDescription);
+			
+	SpellGlobeSelectedDelegate.Broadcast(bEnableSpellPointsButton, bEnableEquipButton, Description, NextLevelDescription);
 }
 
 void USpellMenuWidgetController::SpendPontButtonPressed()
