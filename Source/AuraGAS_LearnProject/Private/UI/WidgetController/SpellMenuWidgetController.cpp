@@ -15,7 +15,7 @@ void USpellMenuWidgetController::BroadcastInitialValues()
 
 void USpellMenuWidgetController::BindCallbacksToDependencies()
 {
-	GetAuraASC()->AbilityStatusChanged.AddLambda([this](const FGameplayTag& AbilityTag, const FGameplayTag& StatusTag)
+	GetAuraASC()->AbilityStatusChanged.AddLambda([this](const FGameplayTag& AbilityTag, const FGameplayTag& StatusTag, int32 NewLevel)
 	{
 		// 由于升级时, AbilityStatusChanged和OnSpellPointsChangedDelegate都会广播, 不确定这里两个Lambda在服务器和客户端的执行顺序
 		// 如果从ASC获取Status, 以及从PS获取SpellPoints不一定正确
@@ -75,6 +75,14 @@ void USpellMenuWidgetController::SpellGlobeSelected(const FGameplayTag& AbilityT
 	bool bEnableEquipButton = false;
 	ShouldEnableButtons(AbilityStatus, SpellPoints, bEnableSpellPointsButton, bEnableEquipButton);
 	SpellGlobeSelectedDelegate.Broadcast(bEnableSpellPointsButton, bEnableEquipButton);
+}
+
+void USpellMenuWidgetController::SpendPontButtonPressed()
+{
+	if (GetAuraASC())
+	{
+		GetAuraASC()->ServerSpendSpellPoint(SelectedAbility.Ability);
+	}
 }
 
 void USpellMenuWidgetController::ShouldEnableButtons(const FGameplayTag& AbilityStatus, int32 SpellPoints, bool& bShouldEnableSpellPointsButton, bool& bShouldEnableEquipButton)
