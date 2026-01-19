@@ -168,7 +168,7 @@ void USpellMenuWidgetController::OnAbilityEquipped(const FGameplayTag& AbilityTa
 	Info.InputTag = Slot;
 	AbilityInfoDelegate.Broadcast(Info);
 	
-	StopWaitingForEquipDelegate.Broadcast(AbilityInfo->FindAbilityInfoForTag(AbilityTag).AbilityType); // 停止播放等等Equip动画
+	StopWaitingForEquipDelegate.Broadcast(Info.AbilityType); // 停止播放等等Equip动画
 }
 
 void USpellMenuWidgetController::ShouldEnableButtons(const FGameplayTag& AbilityStatus, int32 SpellPoints, bool& bShouldEnableSpellPointsButton, bool& bShouldEnableEquipButton)
