@@ -9,9 +9,10 @@
   <component name="ChangeListManager">
     <list default="true" id="baffbef2-f63c-44a0-a263-ab5800f28f37" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.AuraGAS_LearnProject.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AuraGAS_LearnProject.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/AbilitySystem/Enemy/Effects/GE_SecondaryAttributes_Enemy.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/AbilitySystem/Enemy/Effects/GE_SecondaryAttributes_Enemy.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/AbilitySystem/ExecCalc/ExecCalc_Damage.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/AbilitySystem/ExecCalc/ExecCalc_Damage.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/AbilitySystem/ExecCalc/ExecCalc_Damage.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/AbilitySystem/ExecCalc/ExecCalc_Damage.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/AbilitySystem/AuraAbilitySystemLibrary.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/AbilitySystem/AuraAbilitySystemLibrary.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/AuraAbilityTypes.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/AuraAbilityTypes.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/AbilitySystem/AuraAbilitySystemLibrary.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/AbilitySystem/AuraAbilitySystemLibrary.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/AuraAbilityTypes.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/AuraAbilityTypes.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -366,7 +367,7 @@
       <workItem from="1768834886215" duration="3714000" />
       <workItem from="1768888382115" duration="374000" />
       <workItem from="1768892549767" duration="10905000" />
-      <workItem from="1768918405602" duration="4574000" />
+      <workItem from="1768918405602" duration="8515000" />
     </task>
     <servers />
   </component>
