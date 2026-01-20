@@ -68,6 +68,7 @@ public:
 	void SetDebuffDamage(float InDamage) { DebuffDamage = InDamage; }
 	void SetDebuffDuration(float InDuration) { DebuffDuration = InDuration; }
 	void SetDebuffFrequency(float InFrequency) { DebuffFrequency = InFrequency; }
+	void SetDamageType(TSharedPtr<FGameplayTag> InDamageType) { DamageType = InDamageType; }
 	
 	/** Returns the actual struct used for serialization, subclasses must override this! */
 	// 类似于引擎会为每个继承自 UObject 的 Class 创建对应的 StaticClass 用于序列化和反射, StaticStruct 则用于 Struct 
