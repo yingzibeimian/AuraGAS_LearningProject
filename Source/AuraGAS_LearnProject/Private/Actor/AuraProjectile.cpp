@@ -47,16 +47,18 @@ void AAuraProjectile::BeginPlay()
 	LoopingSoundComponent = UGameplayStatics::SpawnSoundAttached(LoopingSound, GetRootComponent());
 }
 
+void AAuraProjectile::OnHit()
+{
+	UGameplayStatics::PlaySoundAtLocation(this, ImpactSound, GetActorLocation(), FRotator::ZeroRotator);
+	UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, ImpactEffect, GetActorLocation(), FRotator::ZeroRotator);
+	if (LoopingSoundComponent) LoopingSoundComponent->Stop();
+	bHit = true;
+}
+
 void AAuraProjectile::Destroyed()
 {
 	// 防止碰撞后, 服务器已经Destroy, 且该权威行为现在Replicate到客户端时, 但客户端尚未发生碰撞： 此时直接播放碰撞音效和特效并Destroy
-	if (!bHit && !HasAuthority())
-	{
-		UGameplayStatics::PlaySoundAtLocation(this, ImpactSound, GetActorLocation(), FRotator::ZeroRotator);
-		UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, ImpactEffect, GetActorLocation(), FRotator::ZeroRotator);
-		if (LoopingSoundComponent) LoopingSoundComponent->Stop();
-		bHit = true;
-	}
+	if (!bHit && !HasAuthority()) OnHit();
 	
 	Super::Destroyed();
 }
@@ -76,40 +78,32 @@ void AAuraProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, 
 	 */
 	
 	// Overlap只在“数据完整”的情况下才响应, 并防止火球碰撞到自己
-	if (!DamageEffectSpecHandle.Data.IsValid() || DamageEffectSpecHandle.Data.Get()->GetContext().GetEffectCauser() == OtherActor)
-	{
-		return;
-	}
+	// if (!DamageEffectSpecHandle.Data.IsValid() || DamageEffectSpecHandle.Data.Get()->GetContext().GetEffectCauser() == OtherActor)
+	// {
+	// 	return;
+	// }
+	AActor* SourceAvatarActor = DamageEffectParams.SourceAbilitySystemComponent->GetAvatarActor();
+	// 防止Projectile碰撞到发射者自身
+	if (SourceAvatarActor == OtherActor) return;
 	// 防止伤害友方
-	if (UAuraAbilitySystemLibrary::IsFriend(DamageEffectSpecHandle.Data.Get()->GetContext().GetEffectCauser(), OtherActor))
-	{
-		return;
-	}
+	if (UAuraAbilitySystemLibrary::IsFriend(SourceAvatarActor, OtherActor)) return;
 	
 	// 防止客户端上OnSphereOverlap和Destroyed产生竞态时的两种情况
 	// 1. 先执行Destroyed, 则在Destroyed中播放碰撞音效和特效, 后续物体已经被销毁, OnSphereOverlap不会执行
 	// 2. 先执行OnSphereOverlap, 并标记为已碰撞, 后续Destroyed执行时就不会重复播放
-	if (!bHit)
-	{
-		UGameplayStatics::PlaySoundAtLocation(this, ImpactSound, GetActorLocation(), FRotator::ZeroRotator);
-        UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, ImpactEffect, GetActorLocation(), FRotator::ZeroRotator);
-        if (LoopingSoundComponent) LoopingSoundComponent->Stop();
-		bHit = true;
-	}
+	if (!bHit) OnHit();
 	
 	if (HasAuthority())
 	{
 		// Destroy 和 应用GameplayEffect都是服务器权威行为
 		if (UAbilitySystemComponent* TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(OtherActor))
 		{
-			if (DamageEffectSpecHandle.IsValid()) TargetASC->ApplyGameplayEffectSpecToSelf(*DamageEffectSpecHandle.Data.Get());
+			DamageEffectParams.TargetAbilitySystemComponent = TargetASC;
+			UAuraAbilitySystemLibrary::ApplyDamageEffect(DamageEffectParams);
 		}
 		
 		Destroy();
 	}
-	else
-	{
-		bHit = true;
-	}
+	else bHit = true;
 }
 

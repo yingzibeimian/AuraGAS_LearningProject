@@ -40,6 +40,7 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
     	Cast<APawn>(GetAvatarActorFromActorInfo()),
     	ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
     
+	/*
     const UAbilitySystemComponent* SourceASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetAvatarActorFromActorInfo());
     // 设置 EffectContextHandle
     FGameplayEffectContextHandle EffectContextHandle = SourceASC->MakeEffectContext(); // 自动设置Instigator为AuraPlayerState, EffectCauser为AuraCharacter
@@ -60,6 +61,10 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 	UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(SpecHandle, DamageType, ScaledDamage);
     
     Projectile->DamageEffectSpecHandle = SpecHandle;
-    
+    */
+	
+	// 重构: 把 Damage 计算相关参数的设置 放进 FDamageEffectParams
+    Projectile->DamageEffectParams = MakeDamageEffectParamsFromClassDefaults();
+	
     Projectile->FinishSpawning(SpawnTransform);
 }
