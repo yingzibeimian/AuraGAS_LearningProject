@@ -7,15 +7,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="baffbef2-f63c-44a0-a263-ab5800f28f37" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.AuraGAS_LearnProject.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AuraGAS_LearnProject.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AuraGAS_LearnProject.uproject" beforeDir="false" afterPath="$PROJECT_DIR$/AuraGAS_LearnProject.uproject" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/Character/AuraCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/Character/AuraCharacter.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/Character/AuraCharacterBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/Character/AuraCharacterBase.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/Character/AuraEnemy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/Character/AuraEnemy.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/Character/AuraCharacterBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/Character/AuraCharacterBase.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/Interaction/CombatInterface.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/Interaction/CombatInterface.h" afterDir="false" />
-    </list>
+    <list default="true" id="baffbef2-f63c-44a0-a263-ab5800f28f37" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -371,7 +363,7 @@
       <workItem from="1768892549767" duration="10905000" />
       <workItem from="1768918405602" duration="8840000" />
       <workItem from="1768929340905" duration="2714000" />
-      <workItem from="1768979201894" duration="9048000" />
+      <workItem from="1768979201894" duration="9673000" />
     </task>
     <servers />
   </component>
