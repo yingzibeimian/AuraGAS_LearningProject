@@ -174,6 +174,7 @@ void AAuraCharacter::InitAbilityActorInfo()
 	// 设置AuraCharacterBase中的ASC和AS指针
 	AbilitySystemComponent = AuraPlayerState->GetAbilitySystemComponent();
 	AttributeSet = AuraPlayerState->GetAttributeSet();
+	OnAscRegistered.Broadcast(AbilitySystemComponent);
 	
 	// 这里必须用 if 而不能用 check：
 	// 因为 InitAbilityActorInfo() 不仅会在“本地受控角色”上调用，

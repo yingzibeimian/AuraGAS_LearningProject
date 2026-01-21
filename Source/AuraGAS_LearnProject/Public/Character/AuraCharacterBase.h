@@ -9,6 +9,7 @@
 #include "AbilitySystem/Data/CharacterClassInfo.h"
 #include "AuraCharacterBase.generated.h"
 
+class UDebuffNiagaraComponent;
 class UNiagaraSystem;
 class UGameplayEffect;
 class UAbilitySystemComponent;
@@ -41,7 +42,12 @@ public:
 	virtual int32 GetMinionCount_Implementation() override;
 	virtual void IncrementMinionCount_Implementation(int32 Amount) override;
 	virtual ECharacterClass GetCharacterClass_Implementation() override;
+	virtual FOnASCRegistered GetOnASCRegisteredDelegate() override;
+	virtual FOnDeath GetOnDeathDelegate() override;
 	/** Combat Interface */
+	
+	FOnASCRegistered OnAscRegistered;
+	FOnDeath OnDeath;
 	
 	// NetMulticast: 服务器调用一次，这个函数会在服务器 + 所有客户端上都执行, 适合死亡、武器掉落等"所有人都看得到的行为"
 	// Reliable: 保证这个 RPC 一定会被发送并执行，不会因为网络问题被丢弃。 Unreliable更轻量但可能会丢包
@@ -122,6 +128,9 @@ protected:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults")
 	ECharacterClass CharacterClass = ECharacterClass::Warrior;
+	
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UDebuffNiagaraComponent> BurnDebuffComponent;
 	
 private:
 	
