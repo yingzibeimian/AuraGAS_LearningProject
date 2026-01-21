@@ -47,6 +47,9 @@ struct FDamageEffectParams
 	
 	UPROPERTY()
 	float DeathImpulseMagnitude = 0.f;
+
+	UPROPERTY()
+	FVector DeathImpulse = FVector::ZeroVector;
 };
 
 
@@ -64,6 +67,7 @@ public:
 	float GetDebuffDuration() const { return DebuffDuration; }
 	float GetDebuffFrequency() const { return DebuffFrequency; }
 	TSharedPtr<FGameplayTag> GetDamageType() const { return DamageType; }
+	FVector GetDeathImpulse() const { return DeathImpulse; }
 	
 	void SetIsCriticalHit(bool bInIsCriticalHit) { bIsCriticalHit = bInIsCriticalHit; }
 	void SetIsBlockedHit(bool bInIsBlockedHit) { bIsBlockedHit = bInIsBlockedHit; }
@@ -72,6 +76,7 @@ public:
 	void SetDebuffDuration(float InDuration) { DebuffDuration = InDuration; }
 	void SetDebuffFrequency(float InFrequency) { DebuffFrequency = InFrequency; }
 	void SetDamageType(TSharedPtr<FGameplayTag> InDamageType) { DamageType = InDamageType; }
+	void SetDeathImpulse(const FVector& InVector) { DeathImpulse = InVector; }
 	
 	/** Returns the actual struct used for serialization, subclasses must override this! */
 	// 类似于引擎会为每个继承自 UObject 的 Class 创建对应的 StaticClass 用于序列化和反射, StaticStruct 则用于 Struct 
@@ -119,6 +124,9 @@ protected:
 	float DebuffFrequency = 0.f;
 	
 	TSharedPtr<FGameplayTag> DamageType;
+	
+	UPROPERTY()
+	FVector DeathImpulse = FVector::ZeroVector;
 };
 
 /**
