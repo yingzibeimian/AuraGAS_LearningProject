@@ -23,7 +23,7 @@ void UDebuffNiagaraComponent::BeginPlay()
 		ASC->RegisterGameplayTagEvent(DebuffTag, EGameplayTagEventType::NewOrRemoved).AddUObject(this, &UDebuffNiagaraComponent::DebuffTagChanged);
 	}
 	else if (CombatInterface)
-	{	
+	{
 		// WeakLambda: When InUserObject is not valid, the lambda will not execute
 		CombatInterface->GetOnASCRegisteredDelegate().AddWeakLambda(this, [this](UAbilitySystemComponent* InASC)
 		{
