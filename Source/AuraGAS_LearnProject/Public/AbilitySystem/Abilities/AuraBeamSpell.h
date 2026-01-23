@@ -17,8 +17,11 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void StoreMouseDataInfo(const FHitResult& HitResult);
 
-	UFUNCTION(BlueprintCallable)	
+	UFUNCTION(BlueprintCallable)
 	void StoreOwnerVariables();
+	
+	UFUNCTION(BlueprintCallable)
+	void TraceFirstTarget(const FVector& BeamTargetLocation, const FGameplayTag& SocketTag);
 	
 protected:
 	
