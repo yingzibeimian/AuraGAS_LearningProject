@@ -130,7 +130,19 @@ void UAuraFireBolt::SpawnProjectiles(const FVector& ProjectileTargetLocation, co
 		{
 			if (HomingTarget && HomingTarget->Implements<UCombatInterface>())
 			{
-				Projectile->ProjectileMovement->HomingTargetComponent = HomingTarget->GetRootComponent();
+				const bool bHomingTargetDead = ICombatInterface::Execute_IsDead(HomingTarget);
+				if (bHomingTargetDead)
+				{
+					FVector ProjectileTargetLocationOnFloor;
+					UAuraAbilitySystemLibrary::GetClosestLocationOnFloor(this, ProjectileTargetLocation, ProjectileTargetLocationOnFloor);
+					Projectile->HomingTargetSceneComponent = NewObject<USceneComponent>(USceneComponent::StaticClass());
+					Projectile->HomingTargetSceneComponent->SetWorldLocation(ProjectileTargetLocationOnFloor);
+					Projectile->ProjectileMovement->HomingTargetComponent = Projectile->HomingTargetSceneComponent;
+				}
+				else
+				{
+				    Projectile->ProjectileMovement->HomingTargetComponent = HomingTarget->GetRootComponent();
+				}
 			}
 			else
 			{

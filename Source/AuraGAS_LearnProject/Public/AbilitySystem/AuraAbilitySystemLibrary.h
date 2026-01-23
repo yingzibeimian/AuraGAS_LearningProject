@@ -111,6 +111,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category="AuraAbilitySystemLibrary|GameplayMechanics")
 	static void GetClosestTargets(int32 MaxTargets, const TArray<AActor*>& Actors, TArray<AActor*>& OutClosestTargets, const FVector& Origin);
 	
+	UFUNCTION(BlueprintCallable, Category="AuraAbilitySystemLibrary|GameplayMechanics")
+	static bool GetClosestLocationOnFloor(const UObject* WorldContextObject, const FVector& Origin, FVector& OutClosestLocation, float SearchHalfLength = 1000.f, float ZOffset = 0.f);
+	
 	UFUNCTION(BlueprintPure, Category="AuraAbilitySystemLibrary|GameplayMechanics")
 	static bool IsFriend(AActor* FirstActor, AActor* SecondActor);
 	

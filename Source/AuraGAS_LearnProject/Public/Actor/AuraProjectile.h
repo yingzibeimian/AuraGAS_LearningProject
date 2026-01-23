@@ -59,4 +59,7 @@ private:
 	
 	UPROPERTY()
 	TObjectPtr<UAudioComponent> LoopingSoundComponent;
+	
+	UFUNCTION()
+	void OnHomingTargetDeath(AActor* DeadActor);
 };

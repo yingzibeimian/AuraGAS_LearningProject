@@ -345,6 +345,27 @@ void UAuraAbilitySystemLibrary::GetClosestTargets(int32 MaxTargets, const TArray
 	}
 }
 
+bool UAuraAbilitySystemLibrary::GetClosestLocationOnFloor(const UObject* WorldContextObject, const FVector& Origin,
+	FVector& OutClosestLocation, float SearchHalfLength, float ZOffset)
+{
+	if (const UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
+	{
+		FHitResult HitResult;
+		const FVector TraceStart = Origin + FVector(0.f, 0.f, SearchHalfLength);
+		const FVector TraceEnd = Origin - FVector(0.f, 0.f, SearchHalfLength);
+		World->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECollisionChannel::ECC_WorldStatic);
+		if (HitResult.bBlockingHit)
+		{
+			OutClosestLocation = HitResult.ImpactPoint;
+			OutClosestLocation.Z += ZOffset;
+			return true;
+		}
+	}
+	OutClosestLocation = Origin;
+	OutClosestLocation.Z += ZOffset;
+	return true;
+}
+
 bool UAuraAbilitySystemLibrary::IsFriend(AActor* FirstActor, AActor* SecondActor)
 {
 	const bool bBothArePlayer = FirstActor->ActorHasTag(FName("Player")) && SecondActor->ActorHasTag(FName("Player"));

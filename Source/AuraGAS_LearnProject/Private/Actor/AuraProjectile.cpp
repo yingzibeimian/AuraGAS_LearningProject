@@ -11,6 +11,7 @@
 #include "Components/AudioComponent.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "Interaction/CombatInterface.h"
 #include "Kismet/GameplayStatics.h"
 
 AAuraProjectile::AAuraProjectile()
@@ -45,6 +46,22 @@ void AAuraProjectile::BeginPlay()
 	Sphere->OnComponentBeginOverlap.AddDynamic(this, &AAuraProjectile::OnSphereOverlap);
 	
 	LoopingSoundComponent = UGameplayStatics::SpawnSoundAttached(LoopingSound, GetRootComponent());
+	
+	if (HasAuthority() && ProjectileMovement->HomingTargetComponent.IsValid())
+	{
+		AActor* HomingTarget = ProjectileMovement->HomingTargetComponent->GetOwner();
+		if (ICombatInterface* HomingTargetCombatInterface = Cast<ICombatInterface>(HomingTarget))
+		{
+			if (ICombatInterface::Execute_IsDead(HomingTarget))
+			{
+				OnHomingTargetDeath(HomingTarget);
+			}
+			else
+			{
+				HomingTargetCombatInterface->GetOnDeathDelegate().AddUniqueDynamic(this, &AAuraProjectile::OnHomingTargetDeath);
+			}
+		}
+	}
 }
 
 void AAuraProjectile::OnHit()
@@ -121,5 +138,15 @@ void AAuraProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, 
 		Destroy();
 	}
 	else bHit = true;
+}
+
+void AAuraProjectile::OnHomingTargetDeath(AActor* DeadActor)
+{
+	// ProjectileMovement->bIsHomingProjectile = false;
+	FVector DeadActorLocationOnFloor;
+	UAuraAbilitySystemLibrary::GetClosestLocationOnFloor(this, DeadActor->GetActorLocation(), DeadActorLocationOnFloor);
+	HomingTargetSceneComponent = NewObject<USceneComponent>(USceneComponent::StaticClass());
+	HomingTargetSceneComponent->SetWorldLocation(DeadActorLocationOnFloor);
+	ProjectileMovement->HomingTargetComponent = HomingTargetSceneComponent;
 }
 
