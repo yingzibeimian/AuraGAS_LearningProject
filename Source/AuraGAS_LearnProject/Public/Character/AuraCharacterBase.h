@@ -25,6 +25,7 @@ class AURAGAS_LEARNPROJECT_API AAuraCharacterBase : public ACharacter, public IA
 public:
 	// Sets default values for this character's properties
 	AAuraCharacterBase();
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	// 实现接口IAbilitySystemInterface内方法 AbilitySystemComponent Getter
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	// AttributeSet Getter
@@ -58,6 +59,12 @@ public:
 	UPROPERTY(EditAnywhere, Category="Combat")
 	TArray<FTaggedMontage> AttackMontages;
 	
+	UPROPERTY(ReplicatedUsing=OnRep_Stunned, BlueprintReadOnly)
+	bool bIsStunned = false;
+	
+	UFUNCTION()
+	virtual void OnRep_Stunned();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -78,6 +85,11 @@ protected:
 	FName TailSocketName;
 	
 	bool bDead = false;
+	
+	virtual void OnStunTagChanged(const FGameplayTag CallbackTag, int32 NewCount);
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Combat")
+	float BaseWalkSpeed = 600.f;
 	
 	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;

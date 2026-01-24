@@ -47,9 +47,6 @@ public:
 	bool bHitReacting = false;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Combat")
-	float BaseWalkSpeed = 250.f;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Combat")
 	float LifeSpan = 5.f;
 	
 	UPROPERTY(BlueprintReadWrite, Category="Combat")
@@ -60,6 +57,7 @@ protected:
 	
 	virtual void InitAbilityActorInfo() override;
 	virtual void InitializeDefaultAttributes() const override;
+	virtual void OnStunTagChanged(const FGameplayTag CallbackTag, int32 NewCount) override;
 	
 	// 不需要Replication, 因为对于AIController所控制的敌人, 其需要等级的计算等重要事项只会在Server上进行
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults")
