@@ -46,6 +46,8 @@ public:
 	virtual ECharacterClass GetCharacterClass_Implementation() override;
 	virtual FOnASCRegistered& GetOnASCRegisteredDelegate() override;
 	virtual USkeletalMeshComponent* GetWeapon_Implementation() override;
+	virtual void SetIsBeingShocked_Implementation(bool bIsBeingShocked) override;
+	virtual bool IsBeingShocked_Implementation() const override;
 	/** Combat Interface */
 	
 	FOnASCRegistered OnAscRegistered;
@@ -68,6 +70,9 @@ public:
 	bool bIsBurned = false;
 	UFUNCTION()
 	virtual void OnRep_Burned();
+	
+	UPROPERTY(Replicated, BlueprintReadOnly)
+	bool bIsBeingShocked = false;
 	
 protected:
 	// Called when the game starts or when spawned

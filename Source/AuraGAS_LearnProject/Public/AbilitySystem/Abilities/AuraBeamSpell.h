@@ -31,6 +31,13 @@ public:
 	
 	UFUNCTION(BlueprintImplementableEvent)
 	void AdditionalTargetDied(AActor* DeadActor);
+
+	UFUNCTION(BlueprintCallable)
+	void RemoveOnDeathBindingFromPrimaryTarget();
+	
+	UFUNCTION(BlueprintCallable)
+	void RemoveOnDeathBindingFromAdditionalTarget(AActor* AdditionalTarget);
+	
 protected:
 	
 	UPROPERTY(BlueprintReadWrite, Category="Beam")

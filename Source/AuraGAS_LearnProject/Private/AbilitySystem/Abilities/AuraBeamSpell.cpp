@@ -96,3 +96,19 @@ void UAuraBeamSpell::StoreAdditionalTargets(TArray<AActor*>& OutAdditionalTarget
 		}
 	}
 }
+
+void UAuraBeamSpell::RemoveOnDeathBindingFromPrimaryTarget()
+{
+	if (ICombatInterface* CombatInterface = Cast<ICombatInterface>(MouseHitActor))
+	{
+		CombatInterface->GetOnDeathDelegate().RemoveDynamic(this, &UAuraBeamSpell::PrimaryTargetDied);
+	}
+}
+
+void UAuraBeamSpell::RemoveOnDeathBindingFromAdditionalTarget(AActor* AdditionalTarget)
+{
+	if (ICombatInterface* CombatInterface = Cast<ICombatInterface>(AdditionalTarget))
+	{
+		CombatInterface->GetOnDeathDelegate().RemoveDynamic(this, &UAuraBeamSpell::AdditionalTargetDied);
+	}
+}
