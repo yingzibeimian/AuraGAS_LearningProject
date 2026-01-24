@@ -91,7 +91,7 @@ public:
 	ECharacterClass GetCharacterClass();
 	
 	// Return delegate by reference; copying would break bindings
-	virtual FOnASCRegistered GetOnASCRegisteredDelegate() = 0;
+	virtual FOnASCRegistered& GetOnASCRegisteredDelegate() = 0;
 	
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void SetInShockLoop(bool bInLoop);
