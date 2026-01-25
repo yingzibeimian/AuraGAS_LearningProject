@@ -9,6 +9,7 @@
 #include "AbilitySystem/Data/CharacterClassInfo.h"
 #include "AuraCharacterBase.generated.h"
 
+class UPassiveNiagaraComponent;
 class UDebuffNiagaraComponent;
 class UNiagaraSystem;
 class UGameplayEffect;
@@ -167,4 +168,16 @@ private:
 	
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	UAnimMontage* HitReactMontage;
+	
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UPassiveNiagaraComponent> HaloOfProtectionNiagaraComponent;
+	
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UPassiveNiagaraComponent> LifeSiphonNiagaraComponent;
+	
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UPassiveNiagaraComponent> ManaSiphonNiagaraComponent;
+	
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<USceneComponent> EffectAttachComponent;
 };
