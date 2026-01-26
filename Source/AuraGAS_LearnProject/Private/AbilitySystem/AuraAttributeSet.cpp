@@ -70,6 +70,9 @@ void UAuraAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Ou
 	DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet, ManaRegeneration, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet, MaxHealth, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet, MaxMana, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet, LifeSiphonRatio, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet, ManaSiphonRatio, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet, DamageReduction, COND_None, REPNOTIFY_Always);
 	
 	// Resistance Attributes
 	DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet, FireResistance, COND_None, REPNOTIFY_Always);
@@ -166,10 +169,24 @@ void UAuraAttributeSet::HandleIncomingDamage(const FEffectProperties& Props)
 	{
 		const float NewHealth = GetHealth() - LocalIncomingDamage;
 		SetHealth(FMath::Clamp(NewHealth, 0.f, GetMaxHealth()));
-			
+		
+		// Handle Life Siphon
+		const UAuraAttributeSet* SourceAttributeSet = Cast<UAuraAttributeSet>(Props.SourceASC->GetAttributeSet(UAuraAttributeSet::StaticClass()));
+		if (SourceAttributeSet && SourceAttributeSet->GetLifeSiphonRatio() > 0.f)
+		{
+			HandleLifeSiphon(Props, SourceAttributeSet->GetLifeSiphonRatio(), LocalIncomingDamage);
+		}
+		
 		const bool bFatal = NewHealth <= 0.f;
 		if (bFatal)
 		{
+			// When Source kills Target and has a positive ManaSiphonRatio, Source drains a percentage of the Target's remaining Mana
+			// Handle Mana Siphon
+			if (SourceAttributeSet && SourceAttributeSet->GetManaSiphonRatio() > 0.f)
+			{
+				HandleManaSiphon(Props, SourceAttributeSet->GetManaSiphonRatio());
+			}
+			
 			if (ICombatInterface* CombatInterface = Cast<ICombatInterface>(Props.TargetAvatarActor))
 			{
 				CombatInterface->Die(UAuraAbilitySystemLibrary::GetDeathImpulse(Props.EffectContextHandle));
@@ -183,7 +200,7 @@ void UAuraAttributeSet::HandleIncomingDamage(const FEffectProperties& Props)
 			{
 				FGameplayTagContainer TagContainer;
 				TagContainer.AddTag(FAuraGameplayTags::Get().Effects_HitReact);
-				Props.TargetASC->TryActivateAbilitiesByTag(TagContainer);	
+				Props.TargetASC->TryActivateAbilitiesByTag(TagContainer);
 			}
 			
 			const FVector& KnockbackForce = UAuraAbilitySystemLibrary::GetKnockbackForce(Props.EffectContextHandle);
@@ -304,7 +321,7 @@ void UAuraAttributeSet::PostAttributeChange(const FGameplayAttribute& Attribute,
 	if (Attribute == GetMaxManaAttribute() && bTopOffMana)
 	{
 		SetMana(GetMaxMana());
-		bTopOffHealth = false;
+		bTopOffMana = false;
 	}
 }
 
@@ -338,6 +355,56 @@ void UAuraAttributeSet::SendXPEvent(const FEffectProperties& Props)
 		Payload.EventTag = GameplayTags.Attributes_Meta_IncomingXP;
 		Payload.EventMagnitude = XPReward;
 		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(Props.SourceCharacter, GameplayTags.Attributes_Meta_IncomingXP, Payload);
+	}
+}
+
+void UAuraAttributeSet::HandleLifeSiphon(const FEffectProperties& Props, float SourceLifeSiphonRatio, float InDamage)
+{
+	if (!Props.SourceCharacter || !Props.SourceCharacter->Implements<UCombatInterface>() || !Props.SourceASC) return;
+	const float LifeToSteal = FMath::Min(SourceLifeSiphonRatio * InDamage, GetHealth());
+	if (LifeToSteal <= 0.f) return;
+	
+	FGameplayEffectContextHandle EffectContext = Props.SourceASC->MakeEffectContext();
+	EffectContext.AddSourceObject(Props.SourceAvatarActor);
+	
+	UGameplayEffect* Effect = NewObject<UGameplayEffect>(GetTransientPackage(), FName("LifeSiphon"));
+	
+	Effect->DurationPolicy = EGameplayEffectDurationType::Instant;
+	
+	FGameplayModifierInfo Modifier;
+	Modifier.Attribute = GetHealthAttribute();
+	Modifier.ModifierOp = EGameplayModOp::Additive;
+	Modifier.ModifierMagnitude = FScalableFloat(LifeToSteal);
+	Effect->Modifiers.Add(Modifier);
+	
+	if (FGameplayEffectSpec* MutableSpec = new FGameplayEffectSpec(Effect, EffectContext, 1.f))
+	{
+		Props.SourceASC->ApplyGameplayEffectSpecToSelf(*MutableSpec);
+	}
+}
+
+void UAuraAttributeSet::HandleManaSiphon(const FEffectProperties& Props, float SourceManaSiphonRatio)
+{
+	if (!Props.SourceCharacter || !Props.SourceCharacter->Implements<UCombatInterface>() || !Props.SourceASC) return;
+	const float ManaToSteal = SourceManaSiphonRatio * GetMana();
+	if (ManaToSteal <= 0.f) return;
+	
+	FGameplayEffectContextHandle EffectContext = Props.SourceASC->MakeEffectContext();
+	EffectContext.AddSourceObject(Props.SourceAvatarActor);
+	
+	UGameplayEffect* Effect = NewObject<UGameplayEffect>(GetTransientPackage(), FName("ManaSiphon"));
+	
+	Effect->DurationPolicy = EGameplayEffectDurationType::Instant;
+	
+	FGameplayModifierInfo Modifier;
+	Modifier.Attribute = GetManaAttribute();
+	Modifier.ModifierOp = EGameplayModOp::Additive;
+	Modifier.ModifierMagnitude = FScalableFloat(ManaToSteal);
+	Effect->Modifiers.Add(Modifier);
+	
+	if (FGameplayEffectSpec* MutableSpec = new FGameplayEffectSpec(Effect, EffectContext, 1.f))
+	{
+		Props.SourceASC->ApplyGameplayEffectSpecToSelf(*MutableSpec);
 	}
 }
 
@@ -409,6 +476,21 @@ void UAuraAttributeSet::OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHeal
 void UAuraAttributeSet::OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAuraAttributeSet, MaxMana, OldMaxMana);
+}
+
+void UAuraAttributeSet::OnRep_LifeSiphonRatio(const FGameplayAttributeData& OldLifeSiphonRatio) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAuraAttributeSet, LifeSiphonRatio, OldLifeSiphonRatio);
+}
+
+void UAuraAttributeSet::OnRep_ManaSiphonRatio(const FGameplayAttributeData& OldManaSiphonRatio) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAuraAttributeSet, ManaSiphonRatio, OldManaSiphonRatio);
+}
+
+void UAuraAttributeSet::OnRep_DamageReduction(const FGameplayAttributeData& OldDamageReduction) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAuraAttributeSet, DamageReduction, OldDamageReduction);
 }
 
 void UAuraAttributeSet::OnRep_FireResistance(const FGameplayAttributeData& OldFireResistance) const

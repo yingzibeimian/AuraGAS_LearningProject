@@ -206,6 +206,27 @@ public:
 	UFUNCTION()
 	void OnRep_Mana(const FGameplayAttributeData& OldMana) const;
 	
+	/*
+	 * Passive Attributes
+	 */
+	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_LifeSiphonRatio, Category = "Passive Attributes")
+	FGameplayAttributeData LifeSiphonRatio;
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, LifeSiphonRatio);
+	UFUNCTION()
+	void OnRep_LifeSiphonRatio(const FGameplayAttributeData& OldLifeSiphonRatio) const;
+	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_ManaSiphonRatio, Category = "Passive Attributes")
+	FGameplayAttributeData ManaSiphonRatio;
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, ManaSiphonRatio);
+	UFUNCTION()
+	void OnRep_ManaSiphonRatio(const FGameplayAttributeData& OldManaSiphonRatio) const;
+    	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_DamageReduction, Category = "Passive Attributes")
+	FGameplayAttributeData DamageReduction;
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, DamageReduction);
+	UFUNCTION()
+	void OnRep_DamageReduction(const FGameplayAttributeData& OldDamageReduction) const;
 	
 	/*
 	 * Meta Attributes 数值的传递与中间处理 只在服务器进行计算, 不需要Replication
@@ -226,6 +247,8 @@ private:
 	void SetEffectProperties(const struct FGameplayEffectModCallbackData& Data, FEffectProperties& Props) const;
 	void ShowFloatingText(const FEffectProperties& Props, float Damage, bool bBlockedHit, bool bCriticalHit) const;
 	void SendXPEvent(const FEffectProperties& Props);
+	void HandleLifeSiphon(const FEffectProperties& Props, float SourceLifeSiphonRatio, float InDamage);
+	void HandleManaSiphon(const FEffectProperties& Props, float SourceManaSiphonRatio);
 	bool bTopOffHealth = false;
 	bool bTopOffMana = false;
 };

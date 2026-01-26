@@ -31,6 +31,8 @@ struct AuraDamageStatics
 	DECLARE_ATTRIBUTE_CAPTUREDEF(ArcaneResistance);
 	DECLARE_ATTRIBUTE_CAPTUREDEF(PhysicalResistance);
 	
+	DECLARE_ATTRIBUTE_CAPTUREDEF(DamageReduction);
+	
 	/*
 	 * GameplayTag -> CaptureDef 映射表
 	 * 注意：
@@ -68,6 +70,8 @@ struct AuraDamageStatics
 		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, LightningResistance, Target, false);
 		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, ArcaneResistance, Target, false);
 		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, PhysicalResistance, Target, false);
+		
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, DamageReduction, Target, false);
 	}
 	
 	void InitTagsToCaptureDefsIfNeeded() const
@@ -97,6 +101,8 @@ struct AuraDamageStatics
 			TagsToCaptureDefs.Add(Tags.Attributes_Resistance_Lightning, LightningResistanceDef);
 			TagsToCaptureDefs.Add(Tags.Attributes_Resistance_Arcane, ArcaneResistanceDef);
 			TagsToCaptureDefs.Add(Tags.Attributes_Resistance_Physical, PhysicalResistanceDef);
+			
+			TagsToCaptureDefs.Add(Tags.Attributes_Passive_DamageReduction, DamageReductionDef);
 		});
 	}
 };
@@ -121,6 +127,8 @@ UExecCalc_Damage::UExecCalc_Damage()
 	RelevantAttributesToCapture.Add(DamageStatics().LightningResistanceDef);
 	RelevantAttributesToCapture.Add(DamageStatics().ArcaneResistanceDef);
 	RelevantAttributesToCapture.Add(DamageStatics().PhysicalResistanceDef);
+	
+	RelevantAttributesToCapture.Add(DamageStatics().DamageReductionDef);
 }
 
 void UExecCalc_Damage::DetermineDebuff(const FGameplayEffectCustomExecutionParameters& ExecutionParams, const FGameplayEffectSpec& Spec, FAggregatorEvaluateParameters EvaluationParameters) const
@@ -217,6 +225,13 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 		
 		Damage += DamageTypeValue;
 	}
+	
+	// If the target has a positive DamageReduction (e.g. from passive abilities like HaloOfProtection), reduce incoming damage by a percentage
+	// Apply DamageReduction
+	float TargetDamageReduction = 0.f;
+	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(DamageStatics().DamageReductionDef, EvaluationParameters, TargetDamageReduction);
+	TargetDamageReduction = FMath::Clamp<float>(TargetDamageReduction, 0.f, 100.f);
+	Damage *= (100 - TargetDamageReduction) / 100.f;
 	
 	// Capture BlockChance on Target, and Determine if there was a successful Block
 	float TargetBlockChance = 0.f;

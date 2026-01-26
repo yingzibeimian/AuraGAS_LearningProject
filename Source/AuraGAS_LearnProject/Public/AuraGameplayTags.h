@@ -33,6 +33,13 @@ public:
 	FGameplayTag Attributes_Secondary_MaxHealth;
 	FGameplayTag Attributes_Secondary_MaxMana;
 	
+	FGameplayTag Attributes_Vital_Health;
+	FGameplayTag Attributes_Vital_Mana;
+	
+	FGameplayTag Attributes_Passive_LifeSiphonRatio;
+	FGameplayTag Attributes_Passive_ManaSiphonRatio;
+	FGameplayTag Attributes_Passive_DamageReduction;
+	
 	FGameplayTag Attributes_Meta_IncomingXP;
 	
 	FGameplayTag InputTag_LMB;

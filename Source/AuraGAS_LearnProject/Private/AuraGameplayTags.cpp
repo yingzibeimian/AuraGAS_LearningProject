@@ -84,6 +84,35 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		FString("Maximum amount of Mana obtainable")
 		);
 	
+	GameplayTags.Attributes_Passive_LifeSiphonRatio = UGameplayTagsManager::Get().AddNativeGameplayTag(
+        FName("Attributes.Passive.LifeSiphonRatio"),
+        FString("Percentage of damage converted to Health")
+    	);
+    
+    GameplayTags.Attributes_Passive_ManaSiphonRatio = UGameplayTagsManager::Get().AddNativeGameplayTag(
+        FName("Attributes.Passive.ManaSiphonRatio"),
+        FString("Percentage of damage converted to Mana")
+    	);
+    
+	GameplayTags.Attributes_Passive_DamageReduction = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Attributes.Passive.DamageReduction"),
+		FString("Percentage of incoming damage reduced")
+		);
+		
+	/*
+     * Meta Attributes
+     */
+    
+    GameplayTags.Attributes_Vital_Health = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Attributes.Vital.Health"), 
+		FString("Amount of damage a player can take before death")
+		);
+		
+	GameplayTags.Attributes_Vital_Mana = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Attributes.Vital.Mana"), 
+		FString("A resource used to cast spells")
+		);
+	
 	/*
 	 * Meta Attributes
 	 */

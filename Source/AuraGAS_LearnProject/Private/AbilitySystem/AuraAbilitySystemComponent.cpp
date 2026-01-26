@@ -297,6 +297,10 @@ void UAuraAbilitySystemComponent::ServerSpendSpellPoint_Implementation(const FGa
 		else if (Status.MatchesTagExact(GameplayTags.Abilities_Status_Equipped) || Status.MatchesTagExact(GameplayTags.Abilities_Status_Unlocked))
 		{
 			AbilitySpec->Level += 1;
+			if (IsPassiveAbility(*AbilitySpec))
+			{
+				PassiveAbilityLevelUp.Broadcast(AbilityTag);
+			}
 		}
 		ClientUpdateAbilityStatus(AbilityTag, Status, AbilitySpec->Level); // 向WidgetController广播技能状态变化
 		MarkAbilitySpecDirty(*AbilitySpec);
