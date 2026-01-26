@@ -11,13 +11,13 @@ class AURAGAS_LEARNPROJECT_API AMagicCircle : public AActor
 {
 	GENERATED_BODY()
 	
-public:	
+public:
 	AMagicCircle();
 	virtual void Tick(float DeltaTime) override;
 
 protected:
 	virtual void BeginPlay() override;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<UDecalComponent> MagicCircleDecal;
 };
