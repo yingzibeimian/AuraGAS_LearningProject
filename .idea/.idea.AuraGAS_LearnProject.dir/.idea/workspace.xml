@@ -7,11 +7,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="baffbef2-f63c-44a0-a263-ab5800f28f37" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.AuraGAS_LearnProject.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AuraGAS_LearnProject.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Assets/Effects/ArcaneShards/NS_ArcaneShards.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Effects/ArcaneShards/NS_ArcaneShards.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/AbilitySystem/Aura/Abilities/Arcane/ArcaneShards/GA_ArrcaneShards.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/AbilitySystem/Aura/Abilities/Arcane/ArcaneShards/GA_ArrcaneShards.uasset" afterDir="false" />
-    </list>
+    <list default="true" id="baffbef2-f63c-44a0-a263-ab5800f28f37" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -398,7 +394,7 @@
       <workItem from="1769445031063" duration="4343000" />
       <workItem from="1769488709422" duration="655000" />
       <workItem from="1769492358774" duration="11486000" />
-      <workItem from="1769512852045" duration="13361000" />
+      <workItem from="1769512852045" duration="13955000" />
     </task>
     <servers />
   </component>
