@@ -10,6 +10,7 @@
 #include "NiagaraFunctionLibrary.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "Actor/MagicCircle.h"
+#include "AuraGAS_LearnProject/AuraGAS_LearnProject.h"
 #include "Components/DecalComponent.h"
 #include "Components/SplineComponent.h"
 #include "Input/AuraInputComponent.h"
@@ -34,11 +35,12 @@ void AAuraPlayerController::PlayerTick(float DeltaTime)
 	UpdateMagicCircleLocation();
 }
 
-void AAuraPlayerController::ShowMagicCircle(UMaterialInterface* DecalMaterial)
+void AAuraPlayerController::ShowMagicCircle(float Radius, UMaterialInterface* DecalMaterial)
 {
 	if (!IsValid(MagicCircle))
 	{
-		MagicCircle = GetWorld()->SpawnActor<AMagicCircle>(MagicCircleClass);
+		MagicCircle = GetWorld()->SpawnActor<AMagicCircle>(MagicCircleClass, CursorHit.ImpactPoint, FRotator::ZeroRotator);
+		MagicCircle->SetTargetingRadius(Radius);
 		if (DecalMaterial != nullptr)
 		{
 			MagicCircle->MagicCircleDecal->SetMaterial(0, DecalMaterial);
@@ -108,7 +110,8 @@ void AAuraPlayerController::CursorTrace()
 		return;
 	}
 	
-	GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, false, CursorHit);
+	const ECollisionChannel TraceChannel = IsValid(MagicCircle) ? ECC_ExcludePlayers : ECC_Visibility;
+	GetHitResultUnderCursor(TraceChannel, false, CursorHit);
 	if (!CursorHit.bBlockingHit) return;
 	
 	LastActor = ThisActor;
