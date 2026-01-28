@@ -10,6 +10,7 @@
     <list default="true" id="baffbef2-f63c-44a0-a263-ab5800f28f37" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.AuraGAS_LearnProject.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AuraGAS_LearnProject.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/AbilitySystem/AuraAbilitySystemLibrary.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/AbilitySystem/AuraAbilitySystemLibrary.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/AbilitySystem/ExecCalc/ExecCalc_Damage.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Private/AbilitySystem/ExecCalc/ExecCalc_Damage.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/AbilitySystem/AuraAbilitySystemLibrary.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/AbilitySystem/AuraAbilitySystemLibrary.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -98,6 +99,7 @@
     <setting file="file://$PROJECT_DIR$/../../../epicgames_ue5/UE_5.2/Engine/Source/Runtime/Engine/Classes/AI/Navigation/NavRelevantInterface.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../epicgames_ue5/UE_5.2/Engine/Source/Runtime/Engine/Classes/AI/Navigation/NavigationTypes.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../epicgames_ue5/UE_5.2/Engine/Source/Runtime/Engine/Classes/Components/PrimitiveComponent.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../../epicgames_ue5/UE_5.2/Engine/Source/Runtime/Engine/Classes/Engine/DamageEvents.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../epicgames_ue5/UE_5.2/Engine/Source/Runtime/Engine/Classes/Engine/EngineTypes.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../epicgames_ue5/UE_5.2/Engine/Source/Runtime/Engine/Classes/GameFramework/Actor.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../epicgames_ue5/UE_5.2/Engine/Source/Runtime/Engine/Classes/GameFramework/Pawn.h" root0="FORCE_HIGHLIGHTING" />
@@ -113,6 +115,7 @@
     <setting file="file://$PROJECT_DIR$/../../../epicgames_ue5/UE_5.2/Engine/Source/Runtime/Engine/Private/Components/PawnMovementComponent.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../epicgames_ue5/UE_5.2/Engine/Source/Runtime/Engine/Private/Controller.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../epicgames_ue5/UE_5.2/Engine/Source/Runtime/Engine/Private/DataReplication.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../../epicgames_ue5/UE_5.2/Engine/Source/Runtime/Engine/Private/Engine/DamageEvents.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../epicgames_ue5/UE_5.2/Engine/Source/Runtime/Engine/Private/GameModeBase.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../epicgames_ue5/UE_5.2/Engine/Source/Runtime/Engine/Private/GameStateBase.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../epicgames_ue5/UE_5.2/Engine/Source/Runtime/Engine/Private/GameplayStatics.cpp" root0="FORCE_HIGHLIGHTING" />
@@ -399,7 +402,7 @@
       <workItem from="1769488709422" duration="655000" />
       <workItem from="1769492358774" duration="11486000" />
       <workItem from="1769512852045" duration="14704000" />
-      <workItem from="1769579763064" duration="5278000" />
+      <workItem from="1769579763064" duration="9696000" />
     </task>
     <servers />
   </component>

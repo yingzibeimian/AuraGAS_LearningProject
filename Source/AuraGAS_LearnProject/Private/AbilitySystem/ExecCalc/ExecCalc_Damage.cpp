@@ -2,9 +2,7 @@
 
 
 #include "AbilitySystem/ExecCalc/ExecCalc_Damage.h"
-
 #include <mutex>
-
 #include "AbilitySystemComponent.h"
 #include "AuraGameplayTags.h"
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
@@ -194,6 +192,7 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	}
 	
 	const FGameplayEffectSpec& Spec = ExecutionParams.GetOwningSpec();
+	FGameplayEffectContextHandle EffectContext = Spec.GetContext();
 	
 	const FGameplayTagContainer* SourceTags = Spec.CapturedSourceTags.GetAggregatedTags();
 	const FGameplayTagContainer* TargetTags = Spec.CapturedTargetTags.GetAggregatedTags();
@@ -226,6 +225,19 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 		Damage += DamageTypeValue;
 	}
 	
+	// Radial Damage with Falloff
+	if (UAuraAbilitySystemLibrary::IsRadialDamage(EffectContext))
+    {
+    	Damage = UAuraAbilitySystemLibrary::GetRadialDamageWithFalloff(
+    		TargetAvatar, 
+    		Damage, 
+    		0.f,
+    		UAuraAbilitySystemLibrary::GetRadialDamageOrigin(EffectContext),
+    		UAuraAbilitySystemLibrary::GetRadialDamageInnerRadius(EffectContext),
+    		UAuraAbilitySystemLibrary::GetRadialDamageOuterRadius(EffectContext),
+    		1.f);
+    }
+	
 	// If the target has a positive DamageReduction (e.g. from passive abilities like HaloOfProtection), reduce incoming damage by a percentage
 	// Apply DamageReduction
 	float TargetDamageReduction = 0.f;
@@ -240,7 +252,6 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	
 	const bool bBlocked = FMath::RandRange(1, 100) < TargetBlockChance;
 	
-	FGameplayEffectContextHandle EffectContext = Spec.GetContext();
 	UAuraAbilitySystemLibrary::SetIsBlockedHit(EffectContext, bBlocked); // 在EffectContext中标记这次GE_Damage的状态为IsBlockedHit
 	
 	// If Block, halve the damage
