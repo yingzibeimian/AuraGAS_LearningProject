@@ -74,6 +74,7 @@ FString UAuraFireBlast::GetNextLevelDescription(int32 Level)
 TArray<AAuraFireBall*> UAuraFireBlast::SpawnFireBalls()
 {
 	TArray<AAuraFireBall*> FireBalls;
+	if (!GetAvatarActorFromActorInfo()->HasAuthority()) return FireBalls;
 	
 	const FVector Forward = GetAvatarActorFromActorInfo()->GetActorForwardVector();
 	const FVector Location = GetAvatarActorFromActorInfo()->GetActorLocation();
@@ -93,6 +94,7 @@ TArray<AAuraFireBall*> UAuraFireBlast::SpawnFireBalls()
 			ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
 		
 		FireBall->DamageEffectParams = MakeDamageEffectParamsFromClassDefaults(nullptr);
+		FireBall->ReturnToActor = GetAvatarActorFromActorInfo();
 		
 		FireBalls.Add(FireBall);
 		
