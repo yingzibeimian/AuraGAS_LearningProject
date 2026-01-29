@@ -85,14 +85,14 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		);
 	
 	GameplayTags.Attributes_Passive_LifeSiphonRatio = UGameplayTagsManager::Get().AddNativeGameplayTag(
-        FName("Attributes.Passive.LifeSiphonRatio"),
-        FString("Percentage of damage converted to Health")
-    	);
+		FName("Attributes.Passive.LifeSiphonRatio"),
+		FString("Percentage of damage converted to Health")
+		);
     
-    GameplayTags.Attributes_Passive_ManaSiphonRatio = UGameplayTagsManager::Get().AddNativeGameplayTag(
-        FName("Attributes.Passive.ManaSiphonRatio"),
-        FString("Percentage of damage converted to Mana")
-    	);
+	GameplayTags.Attributes_Passive_ManaSiphonRatio = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Attributes.Passive.ManaSiphonRatio"),
+		FString("Percentage of damage converted to Mana")
+		);
     
 	GameplayTags.Attributes_Passive_DamageReduction = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Attributes.Passive.DamageReduction"),
@@ -100,10 +100,10 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		);
 		
 	/*
-     * Meta Attributes
-     */
+	 * Meta Attributes
+	 */
     
-    GameplayTags.Attributes_Vital_Health = UGameplayTagsManager::Get().AddNativeGameplayTag(
+	GameplayTags.Attributes_Vital_Health = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Attributes.Vital.Health"), 
 		FString("Amount of damage a player can take before death")
 		);
@@ -161,9 +161,9 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		);
 	
 	GameplayTags.InputTag_Passive_2 = UGameplayTagsManager::Get().AddNativeGameplayTag(
-    	FName("InputTag.Passive.2"), 
-    	FString("Input Tag for Passive Ability 2")
-    	);
+		FName("InputTag.Passive.2"), 
+		FString("Input Tag for Passive Ability 2")
+		);
 	
 	GameplayTags.Damage = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Damage"), 
@@ -190,9 +190,9 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		);
 	
 	GameplayTags.Damage_Physical = UGameplayTagsManager::Get().AddNativeGameplayTag(
-    	FName("Damage.Physical"), 
-    	FString("Physical Damage Type")
-    	);
+		FName("Damage.Physical"), 
+		FString("Physical Damage Type")
+		);
 	
 	/*
 	 * Resistances
@@ -204,9 +204,9 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		);
 	
 	GameplayTags.Attributes_Resistance_Lightning = UGameplayTagsManager::Get().AddNativeGameplayTag(
-    	FName("Attributes.Resistance.Lightning"), 
-    	FString("Resistance to Lightning damage")
-    	);
+		FName("Attributes.Resistance.Lightning"), 
+		FString("Resistance to Lightning damage")
+		);
     		
 	GameplayTags.Attributes_Resistance_Arcane = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Attributes.Resistance.Arcane"), 
@@ -219,8 +219,8 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		);
 		
 	/*
-     * Debuffs
-     */
+	 * Debuffs
+	 */
 	
 	GameplayTags.Debuff_Burn = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Debuff.Burn"), 
@@ -314,9 +314,9 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 	 */
 		
 	GameplayTags.Abilities_Fire_FireBolt = UGameplayTagsManager::Get().AddNativeGameplayTag(
-    	FName("Abilities.Fire.FireBolt"), 
-    	FString("FireBolt Ability Tag")
-    	);
+		FName("Abilities.Fire.FireBolt"), 
+		FString("FireBolt Ability Tag")
+		);
 	
 	GameplayTags.Abilities_Fire_FireBlast = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Abilities.Fire.FireBlast"), 
@@ -343,9 +343,9 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		);
 		
 	GameplayTags.Abilities_Passive_ManaSiphon = UGameplayTagsManager::Get().AddNativeGameplayTag(
-    	FName("Abilities.Passive.ManaSiphon"), 
-    	FString("Mana Siphon")
-    	);
+		FName("Abilities.Passive.ManaSiphon"), 
+		FString("Mana Siphon")
+		);
 	
 	GameplayTags.Abilities_Passive_HaloOfProtection = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Abilities.Passive.HaloOfProtection"), 
@@ -363,9 +363,9 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		);
 		
 	GameplayTags.Abilities_Status_Equipped = UGameplayTagsManager::Get().AddNativeGameplayTag(
-    	FName("Abilities.Status.Equipped"), 
-    	FString("Equipped Status")
-    	);
+		FName("Abilities.Status.Equipped"), 
+		FString("Equipped Status")
+		);
     		
 	GameplayTags.Abilities_Status_Locked = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Abilities.Status.Locked"), 
@@ -378,9 +378,9 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		);
 	
 	GameplayTags.Abilities_Type_None = UGameplayTagsManager::Get().AddNativeGameplayTag(
-    	FName("Abilities.Type.None"), 
-    	FString("Type None")
-    	);
+		FName("Abilities.Type.None"), 
+		FString("Type None")
+		);
 	
 	GameplayTags.Abilities_Type_Offensive = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Abilities.Type.Offensive"), 
@@ -411,14 +411,14 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		);
 		
 	GameplayTags.CombatSocket_RightHand = UGameplayTagsManager::Get().AddNativeGameplayTag(
-    	FName("CombatSocket.RightHand"), 
-    	FString("Right Hand")
-    	);
+		FName("CombatSocket.RightHand"), 
+		FString("Right Hand")
+		);
     		
-    GameplayTags.CombatSocket_LeftHand = UGameplayTagsManager::Get().AddNativeGameplayTag(
-    	FName("CombatSocket.LeftHand"), 
-    	FString("Left Hand")
-    	);
+	GameplayTags.CombatSocket_LeftHand = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("CombatSocket.LeftHand"), 
+		FString("Left Hand")
+		);
 	
 	GameplayTags.CombatSocket_Tail = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("CombatSocket.Tail"), 
@@ -459,18 +459,26 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		);
 	
 	GameplayTags.Player_Block_InputHeld = UGameplayTagsManager::Get().AddNativeGameplayTag(
-    	FName("Player.Block.InputHeld"),
-    	FString("Block Input Held callback for input")
-    	);
+		FName("Player.Block.InputHeld"),
+		FString("Block Input Held callback for input")
+		);
     
-    GameplayTags.Player_Block_InputPressed = UGameplayTagsManager::Get().AddNativeGameplayTag(
-    	FName("Player.Block.InputPressed"),
-    	FString("Block Input Pressed callback for input")
-    	);
+	GameplayTags.Player_Block_InputPressed = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Player.Block.InputPressed"),
+		FString("Block Input Pressed callback for input")
+		);
 	
-    GameplayTags.Player_Block_InputReleased = UGameplayTagsManager::Get().AddNativeGameplayTag(
+	GameplayTags.Player_Block_InputReleased = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Player.Block.InputReleased"),
 		FString("Block Input Released callback for input")
 		);
+	
+	/*
+	 * GameplayCues
+	 */
+	
+	GameplayTags.GameplayCue_FireBlast = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("GameplayCue.FireBlast"),
+		FString("FireBlast GameplayCue Tag")
+		);
 }
-
