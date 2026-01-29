@@ -38,6 +38,26 @@ void UWaitCooldownChange::EndTask()
 	MarkAsGarbage();
 }
 
+void UWaitCooldownChange::CheckRemainingCooldownTime()
+{
+	// To Check if there is leftover cooldown for whatever slot had this ability before
+	FGameplayEffectQuery GameplayEffectQuery = FGameplayEffectQuery::MakeQuery_MatchAnyOwningTags(CooldownTag.GetSingleTagContainer());
+	TArray<float> TimesRemaining = ASC->GetActiveEffectsTimeRemaining(GameplayEffectQuery);
+ 
+	if (TimesRemaining.Num() > 0)
+	{
+		float LongestTime = TimesRemaining[0];
+		for (int32 i = 0; i < TimesRemaining.Num(); i++)
+		{
+			if (TimesRemaining[i] > LongestTime)
+			{
+				LongestTime = TimesRemaining[i];
+			}
+		}
+		CooldownStart.Broadcast(LongestTime);
+	}
+}
+
 void UWaitCooldownChange::CooldownTagChanged(const FGameplayTag InCooldown, int32 NewCount)
 {
 	if (NewCount == 0)

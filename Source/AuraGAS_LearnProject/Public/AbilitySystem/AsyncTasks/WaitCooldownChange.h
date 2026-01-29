@@ -31,6 +31,10 @@ public:
 	
 	UFUNCTION(BlueprintCallable)
 	void EndTask();
+	
+	UFUNCTION(BlueprintCallable)
+	void CheckRemainingCooldownTime();
+	
 protected:
 	
 	UPROPERTY()
