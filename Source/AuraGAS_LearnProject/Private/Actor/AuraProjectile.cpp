@@ -88,7 +88,6 @@ void AAuraProjectile::Destroyed()
 void AAuraProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
                                       UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (DamageEffectParams.SourceAbilitySystemComponent == nullptr) return;
 	/*
 	 * Design Notes:
 	 * Projectile 使用 Deferred Spawn，在 FinishSpawning 之前其 GameplayEffect 数据尚未准备完成。
@@ -105,11 +104,7 @@ void AAuraProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, 
 	// {
 	// 	return;
 	// }
-	AActor* SourceAvatarActor = DamageEffectParams.SourceAbilitySystemComponent->GetAvatarActor();
-	// 防止Projectile碰撞到发射者自身
-	if (SourceAvatarActor == OtherActor) return;
-	// 防止伤害友方
-	if (UAuraAbilitySystemLibrary::IsFriend(SourceAvatarActor, OtherActor)) return;
+	if (!IsValidOverlap(OtherActor)) return;
 	
 	// 防止客户端上OnSphereOverlap和Destroyed产生竞态时的两种情况
 	// 1. 先执行Destroyed, 则在Destroyed中播放碰撞音效和特效, 后续物体已经被销毁, OnSphereOverlap不会执行
@@ -140,6 +135,18 @@ void AAuraProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, 
 		Destroy();
 	}
 	else bHit = true;
+}
+
+bool AAuraProjectile::IsValidOverlap(AActor* OtherActor) const
+{
+	if (DamageEffectParams.SourceAbilitySystemComponent == nullptr) return false;
+	AActor* SourceAvatarActor = DamageEffectParams.SourceAbilitySystemComponent->GetAvatarActor();
+	// 防止Projectile碰撞到发射者自身
+	if (SourceAvatarActor == OtherActor) return false;
+	// 防止Projectile碰撞到发射者自身
+	if (UAuraAbilitySystemLibrary::IsFriend(SourceAvatarActor, OtherActor)) return false;
+	
+	return true;
 }
 
 void AAuraProjectile::OnHomingTargetDeath(AActor* DeadActor)
