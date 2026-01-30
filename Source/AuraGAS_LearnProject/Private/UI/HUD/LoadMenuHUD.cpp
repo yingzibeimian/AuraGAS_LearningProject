@@ -10,7 +10,9 @@ void ALoadMenuHUD::BeginPlay()
 	Super::BeginPlay();
 	
 	LoadMenuViewModel = NewObject<UMVVM_LoadMenu>(this, LoadMenuViewModelClass);
+	LoadMenuViewModel->InitializeLoadSlots();
 	
 	LoadMenuWidget = CreateWidget<ULoadMenuWidget>(GetWorld(), LoadMenuWidgetClass);
 	LoadMenuWidget->AddToViewport();
+	LoadMenuWidget->BlueprintInitializeWidget();
 }
