@@ -6,6 +6,8 @@
 #include "MVVMViewModelBase.h"
 #include "MVVM_LoadMenu.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FSlotSelected);
+
 class UMVVM_LoadSlot;
 /**
  * 
@@ -18,6 +20,9 @@ class AURAGAS_LEARNPROJECT_API UMVVM_LoadMenu : public UMVVMViewModelBase
 public:
 	
 	void InitializeLoadSlots();
+	
+	UPROPERTY(BlueprintAssignable)
+	FSlotSelected SlotSelected;
 	
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UMVVM_LoadSlot> LoadSlotViewModelClass;
