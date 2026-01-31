@@ -8,6 +8,8 @@
 
 class UCharacterClassInfo;
 class UAbilityInfo;
+class UMVVM_LoadSlot;
+class USaveGame;
 /**
  * 
  */
@@ -21,4 +23,9 @@ public:
 	
 	UPROPERTY(EditDefaultsOnly, Category="Ability Class Defaults")
 	TObjectPtr<UAbilityInfo> AbilityInfo;
+	
+	void SaveSlotData(UMVVM_LoadSlot* LoadSlot, int32 SlotIndex);
+	
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<USaveGame> LoadMenuSaveGameClass;
 };
