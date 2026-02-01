@@ -26,10 +26,10 @@ public:
 	TObjectPtr<UAbilityInfo> AbilityInfo;
 	
 	void SaveSlotData(UMVVM_LoadSlot* LoadSlot, int32 SlotIndex);
-	
 	ULoadMenuSaveGame* GetSaveSlotData(const FString& SlotName, int32 SlotIndex) const;
-	
 	static void DeleteSlot(const FString& SlotName, int32 SlotIndex);
+	ULoadMenuSaveGame* RetrieveInGameSaveData() const;
+	void SaveInGameProgressData(ULoadMenuSaveGame* SaveObject) const;
 	
 	void TravelToMap(UMVVM_LoadSlot* Slot);
 	
