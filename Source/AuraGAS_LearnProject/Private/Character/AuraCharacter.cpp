@@ -56,7 +56,45 @@ void AAuraCharacter::PossessedBy(AController* NewController)
 	// Call InitAbilityActorInfo here because it needs to be sure that we have a valid player controller set already, and our player state is valid and accessible
 	// The PlayerState is created and assigned by the engine during the possession process, which happens later in the actor's lifecycle such as constructor
 	InitAbilityActorInfo();
+	LoadProgress();
+	
+	//TODO: Load in Abilities from disk
 	AddCharacterAbilities(); // Only Add Abilities On Server
+}
+
+void AAuraCharacter::LoadProgress()
+{
+	if (AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this)))
+	{
+		ULoadMenuSaveGame* SaveData = AuraGameMode->RetrieveInGameSaveData();
+		if (SaveData == nullptr) return;
+		
+		if (AAuraPlayerState* AuraPlayerState = Cast<AAuraPlayerState>(GetPlayerState()))
+		{
+			AuraPlayerState->SetLevel(SaveData->PlayerLevel);
+			AuraPlayerState->SetXp(SaveData->XP);
+			AuraPlayerState->SetAttributePoints(SaveData->AttributePoints);
+			AuraPlayerState->SetSpellPoints(SaveData->SpellPoints);
+		}
+		
+		SaveData->Strength = UAuraAttributeSet::GetStrengthAttribute().GetNumericValue(GetAttributeSet());
+		SaveData->Intelligence = UAuraAttributeSet::GetIntelligenceAttribute().GetNumericValue(GetAttributeSet());
+		SaveData->Resilience = UAuraAttributeSet::GetResilienceAttribute().GetNumericValue(GetAttributeSet());
+		SaveData->Vigor = UAuraAttributeSet::GetVigorAttribute().GetNumericValue(GetAttributeSet());
+		
+		if (SaveData->bFirstTimeLoadIn)
+		{
+			// 初始化AttributeSet中的属性
+            InitializeDefaultAttributes();
+			AddCharacterAbilities();
+		}
+		else
+		{
+			// 从Disk加载属性
+		}
+		
+		AuraGameMode->SaveInGameProgressData(SaveData);
+	}
 }
 
 /// RepNotify回调函数
@@ -200,6 +238,8 @@ void AAuraCharacter::SaveProgress_Implementation(const FName& CheckpointTag)
 		SaveData->Intelligence = UAuraAttributeSet::GetIntelligenceAttribute().GetNumericValue(GetAttributeSet());
 		SaveData->Resilience = UAuraAttributeSet::GetResilienceAttribute().GetNumericValue(GetAttributeSet());
 		SaveData->Vigor = UAuraAttributeSet::GetVigorAttribute().GetNumericValue(GetAttributeSet());
+		
+		SaveData->bFirstTimeLoadIn = false;
 		
 		AuraGameMode->SaveInGameProgressData(SaveData);
 	}
