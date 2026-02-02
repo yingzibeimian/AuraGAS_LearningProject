@@ -51,6 +51,9 @@ public:
 	TSubclassOf<UGameplayEffect> SecondaryAttributes;
 	
 	UPROPERTY(EditDefaultsOnly, Category="Common Class Defaults")
+	TSubclassOf<UGameplayEffect> SecondaryAttributes_Player;
+	
+	UPROPERTY(EditDefaultsOnly, Category="Common Class Defaults")
 	TSubclassOf<UGameplayEffect> VitalAttributes;
 	
 	UPROPERTY(EditDefaultsOnly, Category="Common Class Defaults")

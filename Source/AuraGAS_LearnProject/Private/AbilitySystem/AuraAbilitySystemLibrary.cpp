@@ -8,8 +8,10 @@
 #include "AuraAbilityTypes.h"
 #include "AuraGameplayTags.h"
 #include "GameplayEffectTypes.h"
+#include "AbilitySystem/AuraAttributeSet.h"
 #include "Engine/DamageEvents.h"
 #include "Game/AuraGameModeBase.h"
+#include "Game/LoadMenuSaveGame.h"
 #include "Interaction/CombatInterface.h"
 #include "Kismet/GameplayStatics.h"
 #include "Player/AuraPlayerState.h"
@@ -70,6 +72,14 @@ USpellMenuWidgetController* UAuraAbilitySystemLibrary::GetSpellMenuWidgetControl
 	return nullptr;
 }
 
+void UAuraAbilitySystemLibrary::ApplyEffectToSelf(UAbilitySystemComponent* ASC, TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level)
+{
+	FGameplayEffectContextHandle ContextHandle = ASC->MakeEffectContext();
+	ContextHandle.AddSourceObject(ASC->GetAvatarActor());
+	const FGameplayEffectSpecHandle SpecHandle = ASC->MakeOutgoingSpec(GameplayEffectClass, Level, ContextHandle);
+	ASC->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
+}
+
 void UAuraAbilitySystemLibrary::InitializeDefaultAttributes(const UObject* WorldContextObject, ECharacterClass CharacterClass, float Level, UAbilitySystemComponent* ASC)
 {
 	AActor* AvatarActor = ASC->GetAvatarActor();
@@ -92,6 +102,62 @@ void UAuraAbilitySystemLibrary::InitializeDefaultAttributes(const UObject* World
 	VitalAttributesContextHandle.AddSourceObject(AvatarActor);
 	const FGameplayEffectSpecHandle VitalAttributesSpecHandle = ASC->MakeOutgoingSpec(CharacterClassInfo->VitalAttributes, Level, VitalAttributesContextHandle);
 	ASC->ApplyGameplayEffectSpecToSelf(*VitalAttributesSpecHandle.Data.Get());
+}
+
+void UAuraAbilitySystemLibrary::InitializeDefaultAttributesFromSaveData(const UObject* WorldContextObject, UAbilitySystemComponent* ASC, ULoadMenuSaveGame* SaveGame)
+{
+	UCharacterClassInfo* CharacterClassInfo = GetCharacterClassInfo(WorldContextObject);
+	if (CharacterClassInfo == nullptr) return;
+	
+	const FAuraGameplayTags& GameplayTags = FAuraGameplayTags::Get();
+	const AActor* SourceAvatarActor = ASC->GetAvatarActor();
+	
+	FGameplayEffectContextHandle EffectContextHandle = ASC->MakeEffectContext();
+	EffectContextHandle.AddSourceObject(SourceAvatarActor);
+	
+	const FGameplayEffectSpecHandle SpecHandle = ASC->MakeOutgoingSpec(CharacterClassInfo->PrimaryAttributes_SetByCaller, 1.f, EffectContextHandle);
+
+	UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(SpecHandle, GameplayTags.Attributes_Primary_Strength, SaveGame->Strength);
+	UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(SpecHandle, GameplayTags.Attributes_Primary_Intelligence, SaveGame->Intelligence);
+	UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(SpecHandle, GameplayTags.Attributes_Primary_Resilience, SaveGame->Resilience);
+	UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(SpecHandle, GameplayTags.Attributes_Primary_Vigor, SaveGame->Vigor);
+	
+	/* Primary */
+	ASC->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data);
+	
+	/* Secondary */
+	ApplyEffectToSelf(ASC, CharacterClassInfo->SecondaryAttributes_Player, 1.f);
+	
+	/* Binding to Primary Attributes Change */
+	const UAuraAttributeSet* AS = Cast<UAuraAttributeSet>(ASC->GetAttributeSet(UAuraAttributeSet::StaticClass()));
+    if (!AS) return;
+    
+    ASC->GetGameplayAttributeValueChangeDelegate(AS->GetStrengthAttribute()).AddLambda(
+    	[&](const FOnAttributeChangeData& Data)
+    	{
+    		ApplyEffectToSelf(ASC, CharacterClassInfo->SecondaryAttributes_Player, 1.f);
+    	});
+    
+    ASC->GetGameplayAttributeValueChangeDelegate(AS->GetIntelligenceAttribute()).AddLambda(
+    	[&](const FOnAttributeChangeData& Data)
+    	{
+    		ApplyEffectToSelf(ASC, CharacterClassInfo->SecondaryAttributes_Player, 1.f);
+    	});
+    
+    ASC->GetGameplayAttributeValueChangeDelegate(AS->GetResilienceAttribute()).AddLambda(
+    	[&](const FOnAttributeChangeData& Data)
+    	{
+    		ApplyEffectToSelf(ASC, CharacterClassInfo->SecondaryAttributes_Player, 1.f);
+    	});
+    
+    ASC->GetGameplayAttributeValueChangeDelegate(AS->GetVigorAttribute()).AddLambda(
+    	[&](const FOnAttributeChangeData& Data)
+    	{
+    		ApplyEffectToSelf(ASC, CharacterClassInfo->SecondaryAttributes_Player, 1.f);
+    	});
+	
+	/* Vital */
+	ApplyEffectToSelf(ASC, CharacterClassInfo->VitalAttributes, 1.f);
 }
 
 void UAuraAbilitySystemLibrary::GiveStartupAbilities(const UObject* WorldContextObject, UAbilitySystemComponent* ASC, ECharacterClass CharacterClass)

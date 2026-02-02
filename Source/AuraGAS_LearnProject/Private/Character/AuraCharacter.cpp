@@ -6,6 +6,7 @@
 #include "AuraGameplayTags.h"
 #include "NiagaraComponent.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
+#include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "AbilitySystem/AuraAttributeSet.h"
 #include "AbilitySystem/Data/LevelUpInfo.h"
 #include "AbilitySystem/Debuff/DebuffNiagaraComponent.h"
@@ -57,9 +58,6 @@ void AAuraCharacter::PossessedBy(AController* NewController)
 	// The PlayerState is created and assigned by the engine during the possession process, which happens later in the actor's lifecycle such as constructor
 	InitAbilityActorInfo();
 	LoadProgress();
-	
-	//TODO: Load in Abilities from disk
-	AddCharacterAbilities(); // Only Add Abilities On Server
 }
 
 void AAuraCharacter::LoadProgress()
@@ -69,28 +67,25 @@ void AAuraCharacter::LoadProgress()
 		ULoadMenuSaveGame* SaveData = AuraGameMode->RetrieveInGameSaveData();
 		if (SaveData == nullptr) return;
 		
-		if (AAuraPlayerState* AuraPlayerState = Cast<AAuraPlayerState>(GetPlayerState()))
-		{
-			AuraPlayerState->SetLevel(SaveData->PlayerLevel);
-			AuraPlayerState->SetXp(SaveData->XP);
-			AuraPlayerState->SetAttributePoints(SaveData->AttributePoints);
-			AuraPlayerState->SetSpellPoints(SaveData->SpellPoints);
-		}
-		
-		SaveData->Strength = UAuraAttributeSet::GetStrengthAttribute().GetNumericValue(GetAttributeSet());
-		SaveData->Intelligence = UAuraAttributeSet::GetIntelligenceAttribute().GetNumericValue(GetAttributeSet());
-		SaveData->Resilience = UAuraAttributeSet::GetResilienceAttribute().GetNumericValue(GetAttributeSet());
-		SaveData->Vigor = UAuraAttributeSet::GetVigorAttribute().GetNumericValue(GetAttributeSet());
-		
 		if (SaveData->bFirstTimeLoadIn)
 		{
 			// 初始化AttributeSet中的属性
             InitializeDefaultAttributes();
-			AddCharacterAbilities();
+			AddCharacterAbilities(); // Only Add Abilities On Server
 		}
 		else
 		{
+			//TODO: Load in Abilities from disk
+			
 			// 从Disk加载属性
+			if (AAuraPlayerState* AuraPlayerState = Cast<AAuraPlayerState>(GetPlayerState()))
+			{
+				AuraPlayerState->SetLevel(SaveData->PlayerLevel);
+				AuraPlayerState->SetXp(SaveData->XP);
+				AuraPlayerState->SetAttributePoints(SaveData->AttributePoints);
+				AuraPlayerState->SetSpellPoints(SaveData->SpellPoints);
+			}
+			UAuraAbilitySystemLibrary::InitializeDefaultAttributesFromSaveData(this, AbilitySystemComponent, SaveData);
 		}
 		
 		AuraGameMode->SaveInGameProgressData(SaveData);
@@ -318,8 +313,5 @@ void AAuraCharacter::InitAbilityActorInfo()
 			AuraHUD->InitOverlay(AuraPlayerController, AuraPlayerState, AbilitySystemComponent, AttributeSet);
 		}
 	}
-	
-	// 初始化AttributeSet中的属性
-	InitializeDefaultAttributes();
 }
 
