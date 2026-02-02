@@ -59,6 +59,11 @@ void AAuraCharacter::PossessedBy(AController* NewController)
 	// The PlayerState is created and assigned by the engine during the possession process, which happens later in the actor's lifecycle such as constructor
 	InitAbilityActorInfo();
 	LoadProgress();
+	
+	if (AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this)))
+	{
+		AuraGameMode->LoadWorldState(GetWorld());
+	}
 }
 
 void AAuraCharacter::LoadProgress()
