@@ -132,29 +132,31 @@ void UAuraAbilitySystemLibrary::InitializeDefaultAttributesFromSaveData(const UO
 	const UAuraAttributeSet* AS = Cast<UAuraAttributeSet>(ASC->GetAttributeSet(UAuraAttributeSet::StaticClass()));
     if (!AS) return;
     
+	TWeakObjectPtr<UAbilitySystemComponent> WeakASC = ASC;
+	TWeakObjectPtr<UCharacterClassInfo> WeakClassInfo = CharacterClassInfo;
     ASC->GetGameplayAttributeValueChangeDelegate(AS->GetStrengthAttribute()).AddLambda(
-    	[&](const FOnAttributeChangeData& Data)
+    	[WeakASC, WeakClassInfo](const FOnAttributeChangeData& Data)
     	{
-    		ApplyEffectToSelf(ASC, CharacterClassInfo->SecondaryAttributes_Player, 1.f);
+    		ApplyEffectToSelf(WeakASC.Get(), WeakClassInfo->SecondaryAttributes_Player, 1.f);
     	});
     
     ASC->GetGameplayAttributeValueChangeDelegate(AS->GetIntelligenceAttribute()).AddLambda(
-    	[&](const FOnAttributeChangeData& Data)
-    	{
-    		ApplyEffectToSelf(ASC, CharacterClassInfo->SecondaryAttributes_Player, 1.f);
-    	});
+	    [WeakASC, WeakClassInfo](const FOnAttributeChangeData& Data)
+		{
+			ApplyEffectToSelf(WeakASC.Get(), WeakClassInfo->SecondaryAttributes_Player, 1.f);
+		});
     
     ASC->GetGameplayAttributeValueChangeDelegate(AS->GetResilienceAttribute()).AddLambda(
-    	[&](const FOnAttributeChangeData& Data)
-    	{
-    		ApplyEffectToSelf(ASC, CharacterClassInfo->SecondaryAttributes_Player, 1.f);
-    	});
+	    [WeakASC, WeakClassInfo](const FOnAttributeChangeData& Data)
+		{
+			ApplyEffectToSelf(WeakASC.Get(), WeakClassInfo->SecondaryAttributes_Player, 1.f);
+		});
     
     ASC->GetGameplayAttributeValueChangeDelegate(AS->GetVigorAttribute()).AddLambda(
-    	[&](const FOnAttributeChangeData& Data)
-    	{
-    		ApplyEffectToSelf(ASC, CharacterClassInfo->SecondaryAttributes_Player, 1.f);
-    	});
+	    [WeakASC, WeakClassInfo](const FOnAttributeChangeData& Data)
+		{
+			ApplyEffectToSelf(WeakASC.Get(), WeakClassInfo->SecondaryAttributes_Player, 1.f);
+		});
 	
 	/* Vital */
 	ApplyEffectToSelf(ASC, CharacterClassInfo->VitalAttributes, 1.f);
