@@ -7,12 +7,12 @@
 #include "GameFramework/PlayerController.h"
 #include "AuraPlayerController.generated.h"
 
+class IHighlightInterface;
 class UNiagaraSystem;
 class UAuraInputConfig;
 class UInputMappingContext;
 class UInputAction;
 struct FInputActionValue;
-class IEnemyInterface;
 class UAuraAbilitySystemComponent;
 class USplineComponent;
 class UDamageTextComponent;
@@ -63,8 +63,8 @@ private:
 	
 	void CursorTrace();
 	// 指针问题之后再处理
-	IEnemyInterface* LastActor;
-	IEnemyInterface* ThisActor;
+	IHighlightInterface* LastActor;
+	IHighlightInterface* ThisActor;
 	FHitResult CursorHit;
 	
 	void AbilityInputTagPressed(FGameplayTag InputTag);

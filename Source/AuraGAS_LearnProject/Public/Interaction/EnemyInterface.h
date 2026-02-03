@@ -28,9 +28,7 @@ class AURAGAS_LEARNPROJECT_API IEnemyInterface
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 	// the class IEnemyInterface is considered abstract
-	// Any class that implements this interface will be required to override these pure virtual fuction
-	virtual void HighlightActor() = 0;
-	virtual void UnHighlightActor() = 0;
+	// Any class that implements this interface will be required to override these pure virtual function
 	
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 	void SetCombatTarget(AActor* InCombatTarget);
