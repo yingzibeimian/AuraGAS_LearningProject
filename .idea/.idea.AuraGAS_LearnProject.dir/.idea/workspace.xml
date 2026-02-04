@@ -8,17 +8,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="baffbef2-f63c-44a0-a263-ab5800f28f37" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.AuraGAS_LearnProject.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AuraGAS_LearnProject.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Assets/Enemies/Goblin/Animations/Spear/AM_HitReact_GoblinSpear.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Enemies/Goblin/Animations/Spear/AM_HitReact_GoblinSpear.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/AbilitySystem/Aura/Abilities/Fire/FireBolt/GA_FireBolt.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/AbilitySystem/Aura/Abilities/Fire/FireBolt/GA_FireBolt.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/AbilitySystem/Enemy/Abilities/GA_HitReact.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/AbilitySystem/Enemy/Abilities/GA_HitReact.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Actor/BP_Pickup_Base.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Actor/BP_Pickup_Base.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Actor/Crystal/BP_HealthCrystal.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Actor/Crystal/BP_HealthCrystal.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Actor/Crystal/BP_ManaCrystal.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Actor/Crystal/BP_ManaCrystal.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Actor/Potion/BP_HealthPotion.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Actor/Potion/BP_HealthPotion.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Actor/Potion/BP_ManaPotion.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Actor/Potion/BP_ManaPotion.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Character/BP_EnemyBase.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Character/BP_EnemyBase.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/Actor/AuraEffectActor.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/AuraGAS_LearnProject/Public/Actor/AuraEffectActor.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/UI/AreYouSure/WBP_AreYouSure.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/UI/AreYouSure/WBP_AreYouSure.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/UI/Button/WBP_Button.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/UI/Button/WBP_Button.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/UI/Overlay/WBP_Overlay.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/UI/Overlay/WBP_Overlay.uasset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -151,6 +143,7 @@
     <setting file="file://$PROJECT_DIR$/../../../epicgames_ue5/UE_5.2/Engine/Source/Runtime/Slate/Private/Framework/Docking/TabManager.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../epicgames_ue5/UE_5.2/Engine/Source/Runtime/Slate/Public/Framework/Text/TextLayout.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../epicgames_ue5/UE_5.2/Engine/Source/Runtime/UMG/Private/Components/ProgressBar.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../../epicgames_ue5/UE_5.2/Engine/Source/Runtime/UMG/Private/UserWidget.cpp" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
@@ -441,7 +434,7 @@
       <workItem from="1770181617047" duration="4500000" />
       <workItem from="1770189259115" duration="11856000" />
       <workItem from="1770208441617" duration="3525000" />
-      <workItem from="1770215754445" duration="8906000" />
+      <workItem from="1770215754445" duration="9559000" />
     </task>
     <servers />
   </component>
