@@ -70,8 +70,40 @@ class AURAGAS_LEARNPROJECT_API AAuraEffectActor : public AActor
 public:	
 	AAuraEffectActor();
 	
+	virtual void Tick(float DeltaSeconds) override;
+	
 protected:
 	virtual void BeginPlay() override;
+	
+	UPROPERTY(BlueprintReadOnly)
+	FVector CalculatedLocation;
+
+	UPROPERTY(BlueprintReadOnly)	
+	FRotator CalculatedRotation;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Pickup Movement")
+	bool bRotates = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Pickup Movement")
+	float RotationRate = 45.f;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Pickup Movement")
+	bool bSinusoidalMovement = false;
+	
+	UFUNCTION(BlueprintCallable)
+	void StartSinusoidalMovement();
+	
+	UFUNCTION(BlueprintCallable)
+	void StartRotation();
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Pickup Movement")
+	float SineAmplitude = 1.f;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Pickup Movement")
+	float SinePeriodConstant = 1;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Pickup Movement")
+	FVector InitialLocation;
 	
 	// UFUNCTION(BlueprintCallable)
 	// void ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGameplayEffect> GameplayEffectClass);
@@ -127,4 +159,9 @@ protected:
 	// 声明编辑器专用的属性修改回调
 	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
 #endif
+	
+private:
+	
+	float RunningTime = 0.f;
+	void ItemMovement(float DeltaTime);
 };
